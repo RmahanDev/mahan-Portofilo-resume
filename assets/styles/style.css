@@ -3366,3 +3366,7 @@ button:focus {
 .contacts-block__info .text-overflow {
 		font-size: 13px;
 	}
+
+.myemail{
+  font-size: 12px;
+}
