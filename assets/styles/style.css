@@ -3361,3 +3361,8 @@ button:focus {
   height: 100%;
 }
 /*# sourceMappingURL=style.css.map */
+
+/*تنظیم سایز فونت پروفایل*/
+.contacts-block__info .text-overflow {
+		font-size: 13px;
+	}
