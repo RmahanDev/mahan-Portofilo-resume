@@ -1833,6 +1833,7 @@ button:focus {
   
   /* اضافه کردن این خط برای تغییر رنگ */
   filter: hue-rotate(180deg) saturate(2); 
+  background-color: #f4c430;
 }
 
 
