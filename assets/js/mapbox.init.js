@@ -1,31 +1,56 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0dGVtcGxhdGUiLCJhIjoiY2s0M3I5ZHgzMGEzNDNucXM1cDd0dzl3cSJ9.a2wjLlxz8LzWj9nIoGsshw';
-var map = new mapboxgl.Map({
+// ایجاد نقشه با استفاده از استایل تاریک و بدون نیاز به هیچ توکنی
+var map = new maplibregl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v10',
-    center: [50.969361, 35.828474], // lng, lat
+    style: {
+        'version': 8,
+        'sources': {
+            'raster-tiles': {
+                'type': 'raster',
+                'tiles': [
+                    'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                ],
+                'tileSize': 256,
+                'attribution': '&copy; OpenStreetMap contributors'
+            }
+        },
+        'layers': [
+            {
+                'id': 'simple-tiles',
+                'type': 'raster',
+                'source': 'raster-tiles',
+                'minzoom': 0,
+                'maxzoom': 18
+            }
+        ]
+    },
+    center: [50.969361, 35.828474], // مختصات اصلاح شده کرج (طول، عرض)
     zoom: 13
 });
 
+// حل مشکل لود نشدن کامل نقشه در تب‌های بوت‌استرپ با تاخیر ۱۰۰ میلی‌ثانیه‌ای
 map.on('load', function () {
-    // استفاده از یک وقفه کوچک برای اطمینان از کامل شدن رندر تب
+    map.resize();
     $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(){
         setTimeout(function() {
             map.resize();
-        }, 100); // 100 میلی‌ثانیه صبر می‌کند تا تب باز شود
+        }, 100);
     });
 });
 
-
-var popup = new mapboxgl.Popup({ offset: 40 }).setText(
+// ساخت Popup روی مارکر
+var popup = new maplibregl.Popup({ offset: 40 }).setText(
     'Alborz Province, Karaj, South Kuye Karmandan, Iran'
 );
 
+// ساخت همان المنت قبلی با کلاس و آیدی شما برای حفظ استایل طلایی
 var el = document.createElement('div');
 el.id = 'marker';
 
-new mapboxgl.Marker(el)
-    .setLngLat([50.969361, 35.828474]) // lng, lat
+// قرار دادن مارکر سفارشی شما روی نقشه
+new maplibregl.Marker(el)
+    .setLngLat([50.969361, 35.828474])
     .setPopup(popup)
     .addTo(map);
 
-map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+// دکمه‌های مثبت و منفی زوم نقشه
+map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
