@@ -2,8 +2,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0dGVtcGxhdGUiLCJhIjoiY2s0M3I5ZHgzMGEzNDNuc
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v10',
-	center: [35.828474, 50.969361], // starting position
-    zoom: 13 // starting zoom
+    center: [50.969361, 35.828474], // lng, lat
+    zoom: 13
 });
 
 map.on('load', function () {
@@ -13,20 +13,16 @@ map.on('load', function () {
     });
 });
 
-// create the popup
 var popup = new mapboxgl.Popup({ offset: 40 }).setText(
     'Alborz Province, Karaj, South Kuye Karmandan, Iran'
 );
 
-// create DOM element for the marker
 var el = document.createElement('div');
 el.id = 'marker';
- 
-// create the marker
+
 new mapboxgl.Marker(el)
-    .setLngLat([35.828474, 50.969361])
-    .setPopup(popup) // sets a popup on this marker
+    .setLngLat([50.969361, 35.828474]) // lng, lat
+    .setPopup(popup)
     .addTo(map);
 
-// Add zoom and rotation controls to the map.
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
