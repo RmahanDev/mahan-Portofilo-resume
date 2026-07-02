@@ -7,11 +7,14 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-    map.resize();
+    // استفاده از یک وقفه کوچک برای اطمینان از کامل شدن رندر تب
     $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(){
-        map.resize();
+        setTimeout(function() {
+            map.resize();
+        }, 100); // 100 میلی‌ثانیه صبر می‌کند تا تب باز شود
     });
 });
+
 
 var popup = new mapboxgl.Popup({ offset: 40 }).setText(
     'Alborz Province, Karaj, South Kuye Karmandan, Iran'
