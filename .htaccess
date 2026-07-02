@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# اگر فایل یا فولدر واقعی نبود
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# اضافه کردن .html به انتهای آدرس
+RewriteRule ^([^\.]+)$ $1.html [L]
