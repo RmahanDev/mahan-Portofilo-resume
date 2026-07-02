@@ -1,12 +1,18 @@
 RewriteEngine On
 
-# اگر فایل یا فولدر واقعی نبود
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# حذف .html از URL برای Projects
+RewriteCond %{THE_REQUEST} \s/Projects/(project-[0-9]+)\.html[\s?] [NC]
+RewriteRule ^Projects/(project-[0-9]+)\.html$ /Projects/%1 [R=301,L]
 
-# لود کردن فایل html در پشت صحنه
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^/]+)/?$ $1.html [L]
+# حذف .html از URL برای Blogs
+RewriteCond %{THE_REQUEST} \s/Blogs/(post-[0-9]+)\.html[\s?] [NC]
+RewriteRule ^Blogs/(post-[0-9]+)\.html$ /Blogs/%1 [R=301,L]
 
-# فقط برای URLهایی که با Projects/ شروع می‌شوند
-RewriteRule ^Projects/([^/]+)/?$ Projects/$1.html [L]
+# لود داخلی Projects
+RewriteRule ^Projects/(project-[0-9]+)/?$ Projects/$1.html [L]
+
+# لود داخلی Blogs
+RewriteRule ^Blogs/(post-[0-9]+)/?$ Blogs/$1.html [L]
+
+# صفحات اصلی
+RewriteRule ^(blog|contact|portfolio|resume)/?$ $1.html [L]

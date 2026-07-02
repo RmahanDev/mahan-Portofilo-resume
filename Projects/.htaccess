@@ -1,4 +1,0 @@
-RewriteEngine On
-
-# نمایش فایل های داخل فولدر Projects بدون پسوند .html
-RewriteRule ^Projects/([A-Za-z0-9_-]+)/?$ projects/$1.html [L]
