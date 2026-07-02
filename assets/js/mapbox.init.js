@@ -54,3 +54,26 @@ new maplibregl.Marker(el)
 
 // دکمه‌های مثبت و منفی زوم نقشه
 map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
+
+var el = document.createElement('div');
+el.id = 'marker';
+
+// ۱. خواندن فایل SVG و تزریق به مارکر
+fetch('../images/icon-map-pic.svg')
+    .then(response => response.text())
+    .then(svgText => {
+        el.innerHTML = svgText; // آیکون داخل دایو قرار می‌گیرد
+        
+        // ۲. پیدا کردن تگ path یا کل svg و تغییر رنگ با JS
+        var svgElement = el.querySelector('svg');
+        if (svgElement) {
+            svgElement.style.fill = '#f4c430'; // رنگ طلایی دلخواه شما
+            svgElement.style.width = '100%';
+            svgElement.style.height = '100%';
+        }
+    });
+
+// ۳. اضافه کردن به نقشه (مانند قبل)
+new maplibregl.Marker(el)
+    .setLngLat([50.969361, 35.828474])
+    .addTo(map);
