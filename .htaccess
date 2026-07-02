@@ -1,9 +1,8 @@
 RewriteEngine On
 
-# اگر فایل یا فولدر واقعی نبود
+# فقط برای فولدر Projects
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/Projects/$1.html -f
 
-# لود کردن فایل html در پشت صحنه
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([^/]+)/?$ $1.html [L]
+RewriteRule ^Projects/([^/]+)/?$ /Projects/$1.html [L]
