@@ -9,7 +9,7 @@ RewriteCond %{THE_REQUEST} \s/Blogs/(post-[0-9]+)\.html[\s?] [NC]
 RewriteRule ^Blogs/(post-[0-9]+)\.html$ /Blogs/%1 [R=301,L]
 
 # لود داخلی Projects
-RewriteRule ^Projects/(project-[0-9]+)/?$ Projects/$1.html [L]
+RewriteRule ^Projects/(project-[0-9]+)/?$ /$1.html [L]
 
 # لود داخلی Blogs
 RewriteRule ^Blogs/(post-[0-9]+)/?$ Blogs/$1.html [L]
