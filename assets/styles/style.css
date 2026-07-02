@@ -1831,10 +1831,10 @@ button:focus {
   height: 3.75rem;
   cursor: pointer;
   
-  /* اضافه کردن این خط برای تغییر رنگ */
-  filter: hue-rotate(180deg) saturate(2); 
-  background-color: #f4c430;
+  /* این خط آبی را به طلایی تبدیل می‌کند */
+  filter: hue-rotate(180deg) saturate(1.5) brightness(1.2); 
 }
+
 
 
 @media only screen and (max-width: 580px) {
