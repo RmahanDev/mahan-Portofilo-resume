@@ -1,8 +1,0 @@
-RewriteEngine On
-
-# فقط برای فولدر projects
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{DOCUMENT_ROOT}/projects/$1.html -f
-
-RewriteRule ^projects/(.+?)/?$ /projects/$1.html [L]
