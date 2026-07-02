@@ -1830,7 +1830,11 @@ button:focus {
   width: 3.75rem;
   height: 3.75rem;
   cursor: pointer;
+  
+  /* اضافه کردن این خط برای تغییر رنگ */
+  filter: hue-rotate(180deg) saturate(2); 
 }
+
 
 @media only screen and (max-width: 580px) {
   #marker {
