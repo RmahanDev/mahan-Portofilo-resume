@@ -1,31 +1,20 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0dGVtcGxhdGUiLCJhIjoiY2s0M3I5ZHgzMGEzNDNucXM1cDd0dzl3cSJ9.a2wjLlxz8LzWj9nIoGsshw';
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v10',
-    center: [50.969361, 35.828474], // lng, lat
-    zoom: 13
+// تعریف مختصات
+var lat = 35.828474;
+var lng = 50.969361;
+
+// ایجاد نقشه
+var map = L.map('map').setView([lat, lng], 13);
+
+// اضافه کردن لایه تاریک (CartoDB Dark Matter)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// اضافه کردن مارکر
+var marker = L.marker([lat, lng]).addTo(map);
+marker.bindPopup("<b>من اینجا هستم!</b><br>Karaj, Alborz Province").openPopup();
+
+// حل مشکل رندر در تب‌های بوت‌استرپ
+$('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(){
+    map.invalidateSize();
 });
-
-map.on('load', function () {
-    // استفاده از یک وقفه کوچک برای اطمینان از کامل شدن رندر تب
-    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(){
-        setTimeout(function() {
-            map.resize();
-        }, 100); // 100 میلی‌ثانیه صبر می‌کند تا تب باز شود
-    });
-});
-
-
-var popup = new mapboxgl.Popup({ offset: 40 }).setText(
-    'Alborz Province, Karaj, South Kuye Karmandan, Iran'
-);
-
-var el = document.createElement('div');
-el.id = 'marker';
-
-new mapboxgl.Marker(el)
-    .setLngLat([50.969361, 35.828474]) // lng, lat
-    .setPopup(popup)
-    .addTo(map);
-
-map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
