@@ -1,18 +1,17 @@
-RewriteEngine On
+Options -MultiViews
+DirectoryIndex index.html
 
-# -----------------------------
-# پوشه Projects
-# هر چیزی داخل Projects بدون .html دیده شود
-# -----------------------------
-RewriteRule ^Projects/([^/]+)/?$ Projects/$1.html [L]
+<IfModule mod_rewrite.c>
+  RewriteEngine On
 
-# -----------------------------
-# پوشه Blogs
-# هر چیزی داخل Blogs بدون .html دیده شود
-# -----------------------------
-RewriteRule ^Blogs/([^/]+)/?$ Blogs/$1.html [L]
+  # اگر فایل یا پوشه‌ای با همین اسم وجود دارد، دست نزن
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
 
-# -----------------------------
-# صفحات اصلی روت (اختیاری)
-# -----------------------------
-RewriteRule ^(blog|contact|portfolio|resume)/?$ $1.html [L]
+  # -----------------------------
+  # URLهای بدون پسوند را به .html نگاشت کن (سراسری)
+  # -----------------------------
+  # هر چیزی مثل /foo یا /dir/bar → /foo.html یا /dir/bar.html
+  RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
