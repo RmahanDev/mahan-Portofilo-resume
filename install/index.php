@@ -11,6 +11,7 @@ define('ROOT_PATH', dirname(__DIR__));
 date_default_timezone_set('Asia/Tehran');
 require ROOT_PATH . '/app/helpers.php';
 require __DIR__ . '/seed.php';
+require ROOT_PATH . '/app/migrate.php';
 
 $configFile = ROOT_PATH . '/config/config.php';
 $installed = is_file($configFile);
@@ -63,6 +64,8 @@ if (!$installed && $ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $seed = json_decode((string) file_get_contents(__DIR__ . '/seed.json'), true);
             seed_database($pdo, $seed);
         }
+        // Content added after the first release (new articles, portfolio items...) comes from migrations.
+        run_migrations($pdo);
 
         $hash = password_hash($adminPass, PASSWORD_DEFAULT);
         $pdo->prepare('INSERT INTO admins (username, password_hash) VALUES (?, ?)
@@ -99,9 +102,15 @@ if (!$installed && $ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>نصب سایت</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../assets/images/favicons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../assets/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="shortcut icon" href="../assets/images/favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../assets/images/favicons/apple-touch-icon-180x180.png">
+    <meta name="theme-color" content="#121212">
     <link rel="stylesheet" type="text/css" href="../assets/styles/vendors/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/rtl.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/styles/enhance.css" />
     <link rel="stylesheet" type="text/css" href="../admin/assets/admin.css" />
 </head>
 

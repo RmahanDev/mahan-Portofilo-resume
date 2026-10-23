@@ -31,11 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>ورود به پنل مدیریت</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="shortcut icon" href="../assets/images/favicons/favicon.png" type="image/png">
+    <link rel="icon" href="../assets/images/favicons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../assets/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="shortcut icon" href="../assets/images/favicons/favicon.ico">
+    <link rel="apple-touch-icon" href="../assets/images/favicons/apple-touch-icon-180x180.png">
+    <meta name="theme-color" content="#121212">
     <link rel="stylesheet" type="text/css" href="../assets/styles/vendors/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/rtl.css" />
-    <link rel="stylesheet" type="text/css" href="assets/admin.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="../assets/styles/enhance.css?v=<?= ASSET_VERSION ?>" />
+    <link rel="stylesheet" type="text/css" href="assets/admin.css?v=<?= ASSET_VERSION ?>" />
 </head>
 
 <body class="admin admin-auth">

@@ -84,10 +84,10 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
                                 <tbody>
 <?php foreach ($list as $m): ?>
                                     <tr class="<?= $m['is_read'] ? '' : 'is-unread' ?>">
-                                        <td><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e($m['name']) ?></a></td>
-                                        <td><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e(mb_strimwidth($m['subject'], 0, 60, '…')) ?></a></td>
-                                        <td dir="ltr"><?= e($m['email']) ?></td>
-                                        <td><?= e(jalali_date(strtotime($m['created_at']))) ?></td>
+                                        <td data-label="فرستنده"><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e($m['name']) ?></a></td>
+                                        <td data-label="موضوع"><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e(mb_strimwidth($m['subject'], 0, 60, '…')) ?></a></td>
+                                        <td dir="ltr" data-label="ایمیل"><?= e($m['email']) ?></td>
+                                        <td data-label="زمان"><?= e(jalali_date(strtotime($m['created_at']))) ?></td>
                                     </tr>
 <?php endforeach; ?>
                                 </tbody>

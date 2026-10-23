@@ -15,7 +15,11 @@ $stats = [
 $latest = rows('SELECT * FROM messages ORDER BY id DESC LIMIT 5');
 
 require dirname(__DIR__) . '/app/admin/layout_top.php';
+$migrationError = setting('migration_error');
 ?>
+<?php if ($migrationError !== ''): ?>
+                        <div class="admin-alert admin-alert--error">به‌روزرسانی خودکار محتوای سایت کامل نشد؛ بعد از چند دقیقه خودکار دوباره تلاش می‌شود. جزئیات: <span dir="ltr"><?= e(substr((string) strstr($migrationError, '|'), 1)) ?></span></div>
+<?php endif; ?>
                         <div class="row">
 <?php foreach ($stats as [$href, $icon, $label, $num, $sub]): ?>
                             <div class="col-12 col-lg-6">
@@ -50,9 +54,9 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
                                 <tbody>
 <?php foreach ($latest as $m): ?>
                                     <tr class="<?= $m['is_read'] ? '' : 'is-unread' ?>">
-                                        <td><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e($m['name']) ?></a></td>
-                                        <td><?= e($m['subject']) ?></td>
-                                        <td><?= e(jalali_date(strtotime($m['created_at']))) ?></td>
+                                        <td data-label="فرستنده"><a href="messages.php?id=<?= (int) $m['id'] ?>"><?= e($m['name']) ?></a></td>
+                                        <td data-label="موضوع"><?= e($m['subject']) ?></td>
+                                        <td data-label="زمان"><?= e(jalali_date(strtotime($m['created_at']))) ?></td>
                                     </tr>
 <?php endforeach; ?>
                                 </tbody>

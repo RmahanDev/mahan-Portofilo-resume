@@ -21,6 +21,9 @@ require __DIR__ . '/app/views/layout_top.php';
                             <h1 class="title title--h1 title__separate"><?= s('portfolio_title') ?></h1>
                         </div>
 
+<?php if (!$projects): ?>
+                        <p class="portfolio-empty"><?= e(setting('portfolio_empty_text', 'نمونه‌کارها به‌زودی اضافه می‌شوند.')) ?></p>
+<?php endif; ?>
                         <div class="select">
                             <span class="placeholder"><?= s('portfolio_filter_placeholder') ?></span>
                             <ul class="filter">

@@ -70,13 +70,13 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
 <?php if ($label === 'image'): ?>
                                         <td class="admin-table__thumb"><?php if ($v !== ''): ?><img src="<?= asset($v, '../') ?>" alt=""><?php endif; ?></td>
 <?php elseif ($def['type'] === 'bool'): ?>
-                                        <td><span class="admin-pill<?= $v ? ' admin-pill--on' : '' ?>"><?= $v ? 'نمایش' : 'پیش‌نویس' ?></span></td>
+                                        <td data-label="<?= e($label) ?>"><span class="admin-pill<?= $v ? ' admin-pill--on' : '' ?>"><?= $v ? 'نمایش' : 'پیش‌نویس' ?></span></td>
 <?php elseif ($def['type'] === 'select'): ?>
-                                        <td><?= e(field_options($def)[$v] ?? $v) ?></td>
+                                        <td data-label="<?= e($label) ?>"><?= e(field_options($def)[$v] ?? $v) ?></td>
 <?php elseif ($def['type'] === 'percent'): ?>
-                                        <td><?= (int) $v ?>%</td>
+                                        <td data-label="<?= e($label) ?>"><?= (int) $v ?>%</td>
 <?php else: ?>
-                                        <td><a href="edit.php?r=<?= e($res['key']) ?>&amp;id=<?= (int) $item['id'] ?>"><?= e(mb_strimwidth(strip_tags((string) $v), 0, 70, '…')) ?></a></td>
+                                        <td class="admin-table__main" data-label="<?= e($label) ?>"><a href="edit.php?r=<?= e($res['key']) ?>&amp;id=<?= (int) $item['id'] ?>"><?= e(mb_strimwidth(strip_tags((string) $v), 0, 70, '…')) ?></a></td>
 <?php endif; ?>
 <?php endforeach; ?>
                                         <td class="admin-table__actions">
