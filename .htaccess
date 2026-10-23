@@ -1,17 +1,31 @@
-Options -MultiViews
-DirectoryIndex index.html
+Options -MultiViews -Indexes
+DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # لینک‌های قدیمی .html به آدرس بدون پسوند منتقل شوند (برای گوگل و لینک‌های ذخیره‌شده)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # صفحه نمونه کار و پست وبلاگ: /Projects/slug و /Blogs/slug
+  RewriteRule ^Projects/([^/]+)/?$ project.php?slug=$1 [L,QSA]
+  RewriteRule ^Blogs/([^/]+)/?$ post.php?slug=$1 [L,QSA]
 
   # اگر فایل یا پوشه‌ای با همین اسم وجود دارد، دست نزن
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # -----------------------------
-  # URLهای بدون پسوند را به .html نگاشت کن (سراسری)
-  # -----------------------------
-  # هر چیزی مثل /foo یا /dir/bar → /foo.html یا /dir/bar.html
-  RewriteRule ^(.+?)/?$ $1.html [L]
+  # URLهای بدون پسوند را به .php نگاشت کن (مثل /resume → resume.php)
+  RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+  RewriteRule ^(.+?)/?$ $1.php [L]
 </IfModule>
+
+# فایل‌های حساس هرگز از طریق وب در دسترس نباشند
+<FilesMatch "\.(sql|json|md|accdb|sample\.php)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

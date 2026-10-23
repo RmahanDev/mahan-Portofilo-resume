@@ -1,0 +1,7 @@
+# Server-specific settings (database password) - created by the installer on the host
+/config/config.php
+# Files uploaded from the admin panel live only on the host
+/uploads/*
+!/uploads/.gitkeep
+!/uploads/.htaccess
+.idea/workspace.xml
