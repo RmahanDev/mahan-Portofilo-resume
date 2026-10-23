@@ -58,6 +58,17 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
                                 </a>
                             </div>
 <?php endforeach; ?>
+<?php if ($g === 'resume'): ?>
+                            <div class="col-12 col-lg-6">
+                                <a class="case-item box box-inner admin-stat" href="skills.php">
+                                    <span class="box icon-box"><i class="font-icon feathericon-bar-chart-2"></i></span>
+                                    <div>
+                                        <h3 class="title title--h3">مهارت‌ها و درصد توانایی</h3>
+                                        <p class="case-item__caption">افزودن مهارت و گروه جدید، تعیین درصد · ویرایش</p>
+                                    </div>
+                                </a>
+                            </div>
+<?php endif; ?>
                         </div>
 <?php endif; ?>
 <?php require dirname(__DIR__) . '/app/admin/layout_bottom.php';

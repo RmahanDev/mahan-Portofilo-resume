@@ -12,6 +12,7 @@ $_menuItems = [
     ['messages', 'messages.php', 'feathericon-inbox', 'پیام‌ها'],
     ['projects', 'list.php?r=projects', 'feathericon-briefcase', 'نمونه کارها'],
     ['posts', 'list.php?r=posts', 'feathericon-edit', 'پست‌های وبلاگ'],
+    ['skills', 'skills.php', 'feathericon-bar-chart-2', 'مهارت‌ها و درصدها'],
 ];
 foreach (setting_groups() as $_gk => $_group) {
     $_menuItems[] = ['settings-' . $_gk, 'settings.php?g=' . $_gk, $_group['icon'], $_group['title']];

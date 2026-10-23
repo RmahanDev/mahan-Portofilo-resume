@@ -138,31 +138,6 @@ function resources(): array
                 'description' => ['label' => 'توضیحات', 'type' => 'textarea', 'rows' => 5],
             ],
         ],
-        'skill_groups' => [
-            'table'    => 'skill_groups',
-            'title'    => 'گروه‌های مهارت (رزومه)',
-            'singular' => 'گروه مهارت',
-            'icon'     => 'feathericon-folder',
-            'group'    => 'resume',
-            'list'     => ['title' => 'عنوان'],
-            'fields'   => [
-                'title' => ['label' => 'عنوان گروه', 'type' => 'text', 'required' => true],
-            ],
-        ],
-        'skill_bars' => [
-            'table'    => 'skill_bars',
-            'title'    => 'نوار مهارت‌ها (رزومه)',
-            'singular' => 'نوار مهارت',
-            'icon'     => 'feathericon-bar-chart-2',
-            'group'    => 'resume',
-            'list'     => ['group_id' => 'گروه', 'label' => 'مهارت', 'percent' => 'درصد'],
-            'filter'   => 'group_id',
-            'fields'   => [
-                'group_id' => ['label' => 'گروه', 'type' => 'select', 'options_from' => ['skill_groups', 'id', 'title']],
-                'label'    => ['label' => 'نام مهارت', 'type' => 'text', 'required' => true],
-                'percent'  => ['label' => 'درصد', 'type' => 'percent', 'default' => 80],
-            ],
-        ],
         'socials' => [
             'table'    => 'socials',
             'title'    => 'شبکه‌های اجتماعی',
@@ -227,7 +202,7 @@ function setting_groups(): array
                 'resume_experience_title' => ['label' => 'تیتر بخش سوابق', 'type' => 'text', 'col' => 6],
                 'resume_skills_title'     => ['label' => 'تیتر بخش مهارت‌ها', 'type' => 'text', 'col' => 6],
             ],
-            'related' => ['resume_items', 'skill_groups', 'skill_bars'],
+            'related' => ['resume_items'],
         ],
         'portfolio' => [
             'title' => 'صفحه نمونه کارها',
