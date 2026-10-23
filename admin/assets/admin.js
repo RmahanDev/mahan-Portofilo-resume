@@ -10,6 +10,14 @@
         }
     });
 
+
+    // Skill bars: keep the "%" label next to each slider in sync.
+    document.querySelectorAll('[data-percent-range]').forEach(function (range) {
+        range.addEventListener('input', function () {
+            range.nextElementSibling.textContent = range.value + '%';
+        });
+    });
+
     // Image fields: preview the chosen file or typed path.
     document.querySelectorAll('[data-image-field]').forEach(function (wrap) {
         var preview = wrap.querySelector('.admin-image__preview');

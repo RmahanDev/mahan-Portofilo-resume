@@ -202,3 +202,21 @@
     .admin-image { align-items: flex-start; flex-direction: column; }
     .admin-image__preview { flex-basis: auto; width: 100%; height: 140px; }
 }
+
+/* ---------- skill bars editor ---------- */
+.admin-skillgroup { margin-bottom: 1.25rem; }
+.admin-skillgroup__head { align-items: center; display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+.admin-skillgroup__head > .input { flex: 1; min-width: 200px; font-weight: 700; }
+.admin-skillgroup__sort { align-items: center; display: flex; font-size: .8rem; gap: .4rem; white-space: nowrap; }
+.admin-skillgroup__sort .input { padding: .45rem .5rem; width: 4rem; }
+.admin-skillbar { align-items: center; border-top: 1px solid var(--color-border); display: grid; gap: .75rem 1rem; grid-template-columns: minmax(160px, 1.2fr) minmax(160px, 1.5fr) 4rem auto; padding: .75rem 0; }
+.admin-skillbar--new { grid-template-columns: minmax(160px, 1.2fr) minmax(160px, 1.5fr); opacity: .85; }
+.admin-skillbar .input { padding: .55rem .9rem; }
+.admin-skillbar__sort { padding: .45rem .5rem !important; text-align: center; }
+.admin-skillgroup--new { opacity: .85; }
+@media only screen and (max-width: 767px) {
+    .admin-skillbar, .admin-skillbar--new { grid-template-columns: 1fr 1fr; }
+    .admin-skillbar__label, .admin-skillbar .admin-range { grid-column: 1 / -1; }
+}
+.admin-gallery__del .form-check-input { float: none; flex: none; margin: 0; position: static; }
+.admin-gallery__del { white-space: nowrap; }
