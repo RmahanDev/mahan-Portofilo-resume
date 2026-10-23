@@ -1,3 +1,6 @@
+// مختصات و متن نقشه از پنل ادمین (contact.php) می‌آید؛ مقادیر پیش‌فرض همان مقادیر قبلی است
+var mapCfg = Object.assign({ lat: 35.828474, lng: 50.969361, zoom: 13, popup: 'Alborz Province, Karaj, South Kuye Karmandan, Iran' }, window.MAP_CONFIG || {});
+
 // ایجاد نقشه با استفاده از استایل تاریک و بدون نیاز به هیچ توکنی
 var map = new maplibregl.Map({
     container: 'map',
@@ -23,8 +26,8 @@ var map = new maplibregl.Map({
             }
         ]
     },
-    center: [50.969361, 35.828474], // مختصات اصلاح شده کرج (طول، عرض)
-    zoom: 13
+    center: [mapCfg.lng, mapCfg.lat], // (طول، عرض)
+    zoom: mapCfg.zoom
 });
 
 // حل مشکل لود نشدن کامل نقشه در تب‌های بوت‌استرپ با تاخیر ۱۰۰ میلی‌ثانیه‌ای
@@ -38,9 +41,7 @@ map.on('load', function () {
 });
 
 // ساخت Popup روی مارکر
-var popup = new maplibregl.Popup({ offset: 40 }).setText(
-    'Alborz Province, Karaj, South Kuye Karmandan, Iran'
-);
+var popup = new maplibregl.Popup({ offset: 40 }).setText(mapCfg.popup);
 
 // ساخت همان المنت قبلی با کلاس و آیدی شما برای حفظ استایل طلایی
 var el = document.createElement('div');
@@ -48,7 +49,7 @@ el.id = 'marker';
 
 // قرار دادن مارکر سفارشی شما روی نقشه
 new maplibregl.Marker(el)
-    .setLngLat([50.969361, 35.828474])
+    .setLngLat([mapCfg.lng, mapCfg.lat])
     .setPopup(popup)
     .addTo(map);
 
