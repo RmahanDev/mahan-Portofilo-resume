@@ -4,7 +4,7 @@
 
 ## پیش‌نیازها
 
-- PHP نسخه 7.4 یا بالاتر (8.1 به بعد پیشنهاد می‌شود) با افزونه‌های `pdo_mysql`، `mbstring` و `fileinfo`
+- PHP نسخه 7.4 یا بالاتر (8.1 به بعد پیشنهاد می‌شود) با افزونه‌های `pdo_mysql` (یا `nd_pdo_mysql`) و `mbstring`
 - یک دیتابیس MySQL یا MariaDB
 - فعال بودن `mod_rewrite` (روی cPanel معمولا فعال است)
 - سایت روی ریشه دامنه نصب شود (مثلا `example.com/` و نه `example.com/folder/`)
@@ -20,7 +20,7 @@
 
 1. در cPanel بخش **Select PHP Version** (یا **MultiPHP Manager**) را باز کنید.
 2. برای دامنه نسخه 8.1 یا بالاتر را انتخاب کنید.
-3. در تب Extensions مطمئن شوید `pdo_mysql`، `mbstring` و `fileinfo` تیک خورده‌اند.
+3. در تب Extensions مطمئن شوید `nd_pdo_mysql` (یا `pdo_mysql`، فقط یکی از این دو) و `mbstring` تیک خورده‌اند.
 
 ## ۳. رساندن کد به هاست
 

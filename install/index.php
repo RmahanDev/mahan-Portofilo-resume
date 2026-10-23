@@ -19,7 +19,6 @@ $checks = [
     'PHP نسخه 7.4 یا بالاتر (فعلی: ' . PHP_VERSION . ')' => version_compare(PHP_VERSION, '7.4.0', '>='),
     'افزونه pdo_mysql'                                    => extension_loaded('pdo_mysql'),
     'افزونه mbstring'                                     => extension_loaded('mbstring'),
-    'افزونه fileinfo (برای آپلود تصویر)'                  => extension_loaded('fileinfo'),
     'پوشه config قابل نوشتن است'                          => is_writable(ROOT_PATH . '/config'),
     'پوشه uploads قابل نوشتن است'                         => is_writable(ROOT_PATH . '/uploads'),
 ];

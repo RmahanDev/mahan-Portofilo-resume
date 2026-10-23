@@ -140,8 +140,10 @@ function store_upload(?array $file): ?string
         throw new RuntimeException('حجم تصویر نباید بیشتر از ۸ مگابایت باشد.');
     }
     $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
-    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
-    if (!isset($allowed[$mime]) || @getimagesize($file['tmp_name']) === false) {
+    // getimagesize reads the real image header, so no extra PHP extension (fileinfo) is needed.
+    $info = @getimagesize($file['tmp_name']);
+    $mime = $info['mime'] ?? '';
+    if (!isset($allowed[$mime])) {
         throw new RuntimeException('فقط تصویر JPG، PNG، GIF یا WEBP مجاز است.');
     }
     $dir = UPLOAD_DIR . '/' . date('Y/m');
