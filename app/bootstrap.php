@@ -8,6 +8,8 @@ declare(strict_types=1);
 define('ROOT_PATH', dirname(__DIR__));
 define('CONFIG_FILE', ROOT_PATH . '/config/config.php');
 define('UPLOAD_DIR', 'uploads');
+// Bump when a stylesheet/script changes so browsers fetch the new file after a deploy.
+define('ASSET_VERSION', '2');
 
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Asia/Tehran');
@@ -30,3 +32,7 @@ if (!empty($GLOBALS['CONFIG']['debug'])) {
 } else {
     ini_set('display_errors', '0');
 }
+
+// Bring an older installed database up to date after a deploy (no-op when nothing is pending).
+require_once __DIR__ . '/migrate.php';
+auto_migrate();

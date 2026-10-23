@@ -37,7 +37,6 @@
 @import url("vendors/default-skin.css");
 @import url("../icons/style-custome-icons.css");
 @import url("../icons/feather.css");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap");
 :root {
   --font-family: 'Poppins', sans-serif;
   --font-base-size: 15px;

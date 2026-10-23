@@ -46,11 +46,11 @@ function row(string $sql, array $params = []): ?array
     return $r === false ? null : $r;
 }
 
-/** All site settings as key => value, loaded once per request. */
-function settings(): array
+/** All site settings as key => value, loaded once per request ($refresh re-reads them). */
+function settings(bool $refresh = false): array
 {
     static $all = null;
-    if ($all === null) {
+    if ($all === null || $refresh) {
         $all = [];
         foreach (rows('SELECT k, v FROM settings') as $r) {
             $all[$r['k']] = $r['v'];
@@ -101,6 +101,27 @@ function rich(?string $html, string $prefix = ''): string
         return $html;
     }
     return preg_replace('~\b(src|href)=(["\'])(assets/|uploads/)~i', '$1=$2' . $prefix . '$3', $html);
+}
+
+/** Latin digits to Persian digits. */
+function fa_digits($value): string
+{
+    return strtr((string) $value, ['0' => '۰', '1' => '۱', '2' => '۲', '3' => '۳', '4' => '۴', '5' => '۵', '6' => '۶', '7' => '۷', '8' => '۸', '9' => '۹']);
+}
+
+/** Minutes needed to read an HTML text (about 180 words a minute in Persian, never below one). */
+function reading_minutes(string $html): int
+{
+    $words = preg_split('~\s+~u', trim(strip_tags($html)), -1, PREG_SPLIT_NO_EMPTY);
+    return max(1, (int) ceil(count($words) / 180));
+}
+
+/** Absolute URL of a site file (og:image and similar tags need one). */
+function absolute_url(string $path): string
+{
+    $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    $dir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+    return ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $dir . '/' . ltrim($path, '/');
 }
 
 function slugify(string $text): string

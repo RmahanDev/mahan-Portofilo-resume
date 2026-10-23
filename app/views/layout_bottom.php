@@ -20,8 +20,9 @@ $p = $prefix;
 <?= $afterMain ?? '' ?>
 
     <script src="<?= $p ?>assets/js/jquery-3.4.1.min.js"></script>
-    <script src="<?= $p ?>assets/js/plugins.min.js"></script>
-    <script src="<?= $p ?>assets/js/common.js"></script>
+    <script src="<?= $p ?>assets/js/plugins.min.js?v=<?= ASSET_VERSION ?>"></script>
+    <script src="<?= $p ?>assets/js/common.js?v=<?= ASSET_VERSION ?>"></script>
+    <script src="<?= $p ?>assets/js/enhance.js?v=<?= ASSET_VERSION ?>"></script>
 <?= $extraScripts ?? '' ?>
 </body>
 

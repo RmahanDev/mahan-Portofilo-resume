@@ -38,7 +38,9 @@ require __DIR__ . '/app/views/layout_top.php';
 <?php endif; ?>
                         </header>
 
+<?php if ($project['client'] !== '' || $project['category_label'] !== '' || $project['date_text'] !== ''): ?>
                         <ul class="details-info details-info--inline">
+<?php if ($project['client'] !== ''): ?>
                             <li class="details-info__item">
                                 <span class="box icon-box"><i class="font-icon feathericon-user"></i></span>
                                 <div class="details-info__info">
@@ -46,6 +48,8 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <?= e($project['client']) ?>
                                 </div>
                             </li>
+<?php endif; ?>
+<?php if ($project['category_label'] !== ''): ?>
                             <li class="details-info__item">
                                 <span class="box icon-box"><i class="font-icon feathericon-layers"></i></span>
                                 <div class="details-info__info">
@@ -53,6 +57,8 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <?= e($project['category_label']) ?>
                                 </div>
                             </li>
+<?php endif; ?>
+<?php if ($project['date_text'] !== ''): ?>
                             <li class="details-info__item">
                                 <span class="box icon-box"><i class="font-icon icon-calendar"></i></span>
                                 <div class="details-info__info">
@@ -60,7 +66,9 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <?= e($project['date_text']) ?>
                                 </div>
                             </li>
+<?php endif; ?>
                         </ul>
+<?php endif; ?>
 
                         <?= rich($project['body_html'], $prefix) ?>
 
