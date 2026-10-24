@@ -807,3 +807,48 @@ body::before {
   .preloader__core { -webkit-transition-duration: .01s !important; transition-duration: .01s !important; }
 }
 .portfolio-empty { font-size: 1.25rem; margin: 1.5rem 0; color: var(--color-paragraph); }
+
+/* Free download box used on the WordPress plugin portfolio items. */
+.download-box {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 219, 110, .45);
+  border-radius: var(--radius-20);
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 219, 110, .14), rgba(255, 219, 110, 0) 55%),
+    var(--color-surface-2);
+  box-shadow: 0 0 0 4px rgba(255, 219, 110, .05), 0 18px 40px -20px rgba(0, 0, 0, .8);
+}
+
+.download-box__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  background: var(--color-gradient);
+}
+
+.download-box__icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23141415' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11M7 11l5 5 5-5M5 20h14'/%3E%3C/svg%3E") center / 1.75rem no-repeat;
+}
+
+.download-box__info { flex: 1 1 14rem; min-width: 0; }
+.download-box__title { display: block; margin-bottom: .35rem; font-size: 1.125rem; font-weight: 800; color: var(--color-heading); }
+.download-box__meta { display: block; color: var(--color-paragraph); font-size: .875rem; line-height: 1.9; overflow-wrap: anywhere; }
+.download-box__btn { flex: 0 0 auto; text-decoration: none; }
+.download-box__note { flex: 1 1 100%; margin: 0; padding-top: 1rem; border-top: 1px dashed var(--color-border); color: var(--color-accent); font-size: .875rem; }
+
+@media (max-width: 575px) {
+  .download-box { padding: 1.15rem; }
+  .download-box__btn { width: 100%; text-align: center; }
+}
