@@ -12,16 +12,54 @@ if (!$post) {
 
 $active = 'blog';
 $title = $post['title'];
-$description = $post['meta_desc'] !== '' ? $post['meta_desc'] : $post['excerpt'];
+$description = $post['meta_desc'] !== '' ? $post['meta_desc'] : ($post['excerpt'] !== '' ? $post['excerpt'] : meta_text($post['intro_html'] . ' ' . $post['body_html']));
 $scrollLine = true;
 $htmlDir = true;
 $ogType = 'article';
 $readMinutes = reading_minutes($post['intro_html'] . ' ' . $post['body_html']);
 $related = rows('SELECT slug, title, category, date_text, cover, excerpt FROM posts WHERE is_published = 1 AND id <> ? ORDER BY sort, id DESC LIMIT 2', [$post['id']]);
 
-$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$pageUrl = rawurlencode($scheme . '://' . ($_SERVER['HTTP_HOST'] ?? '') . ($_SERVER['REQUEST_URI'] ?? ''));
+$titleSuffix = true;
+$canonicalPath = 'Blogs/' . rawurlencode($post['slug']);
+$postUrl = url_for($canonicalPath);
+$pageUrl = rawurlencode($postUrl);
 $pageTitle = rawurlencode($post['title']);
+
+$image = $post['header_image'] !== '' ? $post['header_image'] : $post['cover'];
+if ($image !== '') {
+    $socialImage = absolute_url($image);
+    $socialImageAlt = $post['title'];
+}
+$published = jalali_text_to_iso($post['date_text']) ?? substr((string) $post['created_at'], 0, 10);
+$modified = iso_datetime($post['updated_at']);
+if ($modified === null || substr($modified, 0, 10) < $published) {
+    $modified = $published;
+}
+$articleMeta = ['published' => $published, 'modified' => $modified, 'section' => $post['category']];
+$person = ['@id' => site_url() . '/#person'];
+$schema = [
+    array_filter([
+        '@type'            => 'BlogPosting',
+        '@id'              => $postUrl . '#article',
+        'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $postUrl],
+        'headline'         => mb_substr($post['title'], 0, 110),
+        'description'      => $description,
+        'image'            => $image !== '' ? [$socialImage] : null,
+        'datePublished'    => $published,
+        'dateModified'     => $modified,
+        'inLanguage'       => 'fa-IR',
+        'articleSection'   => $post['category'] !== '' ? $post['category'] : null,
+        'wordCount'        => count(preg_split('~\s+~u', trim(strip_tags($post['intro_html'] . ' ' . $post['body_html'])), -1, PREG_SPLIT_NO_EMPTY)),
+        'author'           => $person,
+        'publisher'        => $person,
+        'isPartOf'         => ['@id' => url_for('blog') . '#webpage'],
+    ]),
+    ['@id' => $postUrl . '#breadcrumb'] + schema_breadcrumb([
+        [setting('profile_name'), site_url() . '/'],
+        [setting('nav_blog'), url_for('blog')],
+        [$post['title'], $postUrl],
+    ]),
+];
 
 require __DIR__ . '/app/views/layout_top.php';
 ?>
@@ -49,7 +87,7 @@ require __DIR__ . '/app/views/layout_top.php';
 <?php endif; ?>
 <?php if ($post['header_image'] !== ''): ?>
                                 <div class="header-post__image-wrap">
-                                    <img class="cover lazyload" src="<?= asset($post['header_image'], $prefix) ?>" alt="" />
+                                    <img class="cover lazyload" src="<?= asset($post['header_image'], $prefix) ?>" alt="<?= e($post['title']) ?>" fetchpriority="high" />
                                 </div>
 <?php endif; ?>
                             </header>
@@ -67,7 +105,7 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <article class="news-item box">
                                         <div class="news-item__image-wrap">
                                             <a class="news-item__link" href="<?= e($rUrl) ?>"></a>
-                                            <img class="cover lazyload" src="<?= asset($r['cover'], $prefix) ?>" alt="" />
+                                            <img class="cover lazyload" src="<?= asset($r['cover'], $prefix) ?>" alt="<?= e($r['title']) ?>" loading="lazy" decoding="async" />
                                         </div>
                                         <div class="news-item__caption">
                                             <div class="news-item__date"><span><?= e($r['category']) ?></span><?= e($r['date_text']) ?></div>

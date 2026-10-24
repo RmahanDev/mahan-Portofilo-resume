@@ -6,6 +6,10 @@
  * @var string $active      about|resume|portfolio|blog|contact
  * @var string $title       <title>
  * @var string $description meta description
+ *
+ * Optional per-page SEO variables: $titleSuffix (append the site name), $canonicalPath, $robots,
+ * $socialImage (absolute URL), $socialImageAlt, $ogType, $articleMeta [published, modified, section],
+ * $schema (extra schema.org nodes).
  */
 $bodyClass  = $bodyClass ?? '';
 $scrollLine = $scrollLine ?? false;
@@ -19,16 +23,30 @@ $nav = [
     'blog'      => ['blog', setting('nav_blog')],
     'contact'   => ['contact', setting('nav_contact')],
 ];
-$socialImage = absolute_url('assets/images/social.png');
 $ogType = $ogType ?? 'website';
 $socials = rows('SELECT icon, url FROM socials ORDER BY sort, id');
+
+$siteName = setting('profile_name');
+$fullTitle = $title;
+if (!empty($titleSuffix) && mb_strlen($title) <= 45 && mb_strpos($title, $siteName) === false) {
+    $fullTitle .= ' | ' . $siteName;
+}
+$socialDefault = !isset($socialImage);
+$socialImage = $socialImage ?? absolute_url('assets/images/social.png');
+$socialImageAlt = $socialImageAlt ?? ($siteName . ' - ' . trim(setting('profile_badge'), ' !'));
+
+$robots = $robots ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+$indexable = strpos($robots, 'noindex') === false;
+$canonicalPath = $canonicalPath ?? ['about' => '', 'resume' => 'resume', 'portfolio' => 'portfolio', 'blog' => 'blog', 'contact' => 'contact'][$active] ?? null;
+$canonical = ($indexable && $canonicalPath !== null) ? url_for($canonicalPath) : '';
+$schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? []) : [];
 ?>
 <!DOCTYPE html>
 <html lang="fa"<?= !empty($htmlDir) ? ' dir="rtl"' : '' ?>>
 
 <head>
     <meta charset="utf-8" />
-    <title><?= e($title) ?></title>
+    <title><?= e($fullTitle) ?></title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
@@ -36,23 +54,52 @@ $socials = rows('SELECT icon, url FROM socials ORDER BY sort, id');
     <meta name="format-detection" content="address=no" />
     <meta name="author" content="<?= s('site_author') ?>" />
     <meta name="description" content="<?= e($description) ?>" />
+    <meta name="robots" content="<?= e($robots) ?>" />
+<?php if ($canonical !== ''): ?>
+    <link rel="canonical" href="<?= e($canonical) ?>" />
+<?php endif; ?>
+    <link rel="alternate" type="application/rss+xml" title="<?= e($siteName) ?>" href="<?= e(url_for('feed.xml')) ?>" />
+<?php if (setting('seo_google_verification') !== ''): ?>
+    <meta name="google-site-verification" content="<?= s('seo_google_verification') ?>" />
+<?php endif; ?>
+<?php if (setting('seo_bing_verification') !== ''): ?>
+    <meta name="msvalidate.01" content="<?= s('seo_bing_verification') ?>" />
+<?php endif; ?>
 
     <meta name="theme-color" content="#121212">
     <meta name="color-scheme" content="dark">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= e($title) ?>">
+    <meta name="twitter:title" content="<?= e($fullTitle) ?>">
     <meta name="twitter:description" content="<?= e($description) ?>">
     <meta name="twitter:image" content="<?= e($socialImage) ?>">
+    <meta name="twitter:image:alt" content="<?= e($socialImageAlt) ?>">
 
-    <meta property="og:title" content="<?= e($title) ?>" />
+    <meta property="og:title" content="<?= e($fullTitle) ?>" />
     <meta property="og:type" content="<?= e($ogType) ?>" />
     <meta property="og:locale" content="fa_IR" />
+<?php if ($canonical !== ''): ?>
+    <meta property="og:url" content="<?= e($canonical) ?>" />
+<?php endif; ?>
     <meta property="og:image" content="<?= e($socialImage) ?>" />
+    <meta property="og:image:alt" content="<?= e($socialImageAlt) ?>" />
+<?php if ($socialDefault): ?>
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+<?php endif; ?>
     <meta property="og:description" content="<?= e($description) ?>" />
-    <meta property="og:site_name" content="<?= s('site_author') ?>" />
+    <meta property="og:site_name" content="<?= e($siteName) ?>" />
+<?php if (!empty($articleMeta)): ?>
+<?php if (!empty($articleMeta['published'])): ?>
+    <meta property="article:published_time" content="<?= e($articleMeta['published']) ?>" />
+<?php endif; ?>
+<?php if (!empty($articleMeta['modified'])): ?>
+    <meta property="article:modified_time" content="<?= e($articleMeta['modified']) ?>" />
+<?php endif; ?>
+<?php if (!empty($articleMeta['section'])): ?>
+    <meta property="article:section" content="<?= e($articleMeta['section']) ?>" />
+<?php endif; ?>
+<?php endif; ?>
 
     <link rel="icon" href="<?= $p ?>assets/images/favicons/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="<?= $p ?>assets/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -81,6 +128,10 @@ $socials = rows('SELECT icon, url FROM socials ORDER BY sort, id');
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/rtl.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/enhance.css?v=<?= ASSET_VERSION ?>" />
 <?= $extraHead ?>
+<?php if ($schemaNodes): ?>
+    <?= json_ld($schemaNodes) ?>
+
+<?php endif; ?>
 </head>
 
 <body<?= $bodyClass !== '' ? ' class="' . e($bodyClass) . '"' : '' ?>>

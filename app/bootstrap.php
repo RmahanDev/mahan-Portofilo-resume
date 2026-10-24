@@ -16,6 +16,7 @@ date_default_timezone_set('Asia/Tehran');
 
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/jalali.php';
+require_once __DIR__ . '/seo.php';
 
 if (!is_file(CONFIG_FILE)) {
     // Fresh host: send the visitor to the web installer.

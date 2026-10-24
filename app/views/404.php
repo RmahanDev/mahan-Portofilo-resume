@@ -4,6 +4,7 @@ $prefix = $GLOBALS['NOT_FOUND_PREFIX'] ?? '';
 $active = '';
 $title = 'صفحه پیدا نشد';
 $description = '';
+$robots = 'noindex, follow';
 
 require __DIR__ . '/layout_top.php';
 ?>

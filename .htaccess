@@ -9,6 +9,19 @@ DirectoryIndex index.php
   RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
   RewriteRule ^ /%1 [R=301,L,NE]
 
+  # آدرس‌های تکراری (index.php، resume.php و ...) به آدرس تمیز منتقل شوند تا گوگل دو نسخه از یک صفحه نبیند
+  RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+  RewriteCond %{THE_REQUEST} \s/+index(\.php)?[\s?] [NC]
+  RewriteRule ^ / [R=301,L,NE]
+  RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+  RewriteCond %{THE_REQUEST} \s/+(resume|portfolio|blog|contact)\.php[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # نقشه سایت، robots.txt و فید وبلاگ
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^feed\.xml$ feed.php [L]
+
   # صفحه نمونه کار و پست وبلاگ: /Projects/slug و /Blogs/slug
   RewriteRule ^Projects/([^/]+)/?$ project.php?slug=$1 [L,QSA]
   RewriteRule ^Blogs/([^/]+)/?$ post.php?slug=$1 [L,QSA]

@@ -14,6 +14,13 @@ foreach (rows('SELECT pc.project_id, c.slug FROM project_categories pc JOIN cate
     $projectCats[$r['project_id']][] = 'category-' . $r['slug'];
 }
 
+$items = [];
+foreach ($projects as $i => $project) {
+    $items[] = ['@type' => 'ListItem', 'position' => $i + 1, 'url' => url_for('Projects/' . rawurlencode($project['slug'])), 'name' => $project['title']];
+}
+$schema = schema_page('CollectionPage', 'portfolio', $title, $description !== '' ? $description : setting('site_description'), [[$title, 'portfolio']],
+    ['mainEntity' => ['@type' => 'ItemList', 'numberOfItems' => count($items), 'itemListElement' => $items]]);
+
 require __DIR__ . '/app/views/layout_top.php';
 ?>
 
@@ -40,12 +47,12 @@ require __DIR__ . '/app/views/layout_top.php';
 
                         <div class="gallery-grid js-masonry js-filter-container">
                             <div class="gutter-sizer"></div>
-<?php foreach ($projects as $project): ?>
+<?php foreach ($projects as $i => $project): ?>
                             <div class="gallery-grid__item <?= e(implode(' ', $projectCats[$project['id']] ?? [])) ?>">
                                 <a href="Projects/<?= e(rawurlencode($project['slug'])) ?>">
                                     <div class="gallery-grid__image-wrap">
                                         <img class="gallery-grid__image cover lazyload"
-                                            src="<?= asset($project['cover']) ?>" alt="" />
+                                            src="<?= asset($project['cover']) ?>" alt="<?= e($project['title']) ?>"<?= $i >= 3 ? ' loading="lazy" decoding="async"' : '' ?> />
                                     </div>
                                     <div class="gallery-grid__caption">
                                         <h3 class="title gallery-grid__title"><?= e($project['title']) ?></h3>

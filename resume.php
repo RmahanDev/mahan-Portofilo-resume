@@ -5,6 +5,7 @@ $prefix = '';
 $active = 'resume';
 $title = setting('seo_resume_title');
 $description = setting('seo_resume_description');
+$schema = schema_page('WebPage', 'resume', $title, $description, [[$title, 'resume']]);
 $bodyClass = 'bg-triangles';
 
 $sections = [

@@ -5,6 +5,7 @@ $prefix = '';
 $active = 'contact';
 $title = setting('seo_contact_title');
 $description = setting('seo_contact_description');
+$schema = schema_page('ContactPage', 'contact', $title, $description, [[$title, 'contact']]);
 
 $mapConfig = json_encode([
     'lat'   => (float) setting('map_lat', '35.828474'),
