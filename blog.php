@@ -9,6 +9,13 @@ $boxOuterClass = 'pb-0';
 
 $posts = rows('SELECT * FROM posts WHERE is_published = 1 ORDER BY sort, id DESC');
 
+$items = [];
+foreach ($posts as $i => $post) {
+    $items[] = ['@type' => 'ListItem', 'position' => $i + 1, 'url' => url_for('Blogs/' . rawurlencode($post['slug'])), 'name' => $post['title']];
+}
+$schema = schema_page('CollectionPage', 'blog', $title, $description !== '' ? $description : setting('site_description'), [[$title, 'blog']],
+    ['mainEntity' => ['@type' => 'ItemList', 'numberOfItems' => count($items), 'itemListElement' => $items]]);
+
 require __DIR__ . '/app/views/layout_top.php';
 ?>
 
@@ -20,11 +27,11 @@ require __DIR__ . '/app/views/layout_top.php';
 <?php if (!$posts): ?>
                             <p style="font-size: 45px;"><?= s('blog_empty_text') ?></p>
 <?php endif; ?>
-<?php foreach ($posts as $post): $url = 'Blogs/' . rawurlencode($post['slug']); ?>
+<?php foreach ($posts as $i => $post): $url = 'Blogs/' . rawurlencode($post['slug']); ?>
                             <article class="news-item box">
                                 <div class="news-item__image-wrap">
                                     <a class="news-item__link" href="<?= e($url) ?>"></a>
-                                    <img class="cover lazyload" src="<?= asset($post['cover']) ?>" alt="" />
+                                    <img class="cover lazyload" src="<?= asset($post['cover']) ?>" alt="<?= e($post['title']) ?>"<?= $i >= 3 ? ' loading="lazy" decoding="async"' : '' ?> />
                                 </div>
                                 <div class="news-item__caption">
                                     <div class="news-item__date"><span><?= e($post['category']) ?></span><?= e($post['date_text']) ?></div>

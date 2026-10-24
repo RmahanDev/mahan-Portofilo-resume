@@ -119,9 +119,7 @@ function reading_minutes(string $html): int
 /** Absolute URL of a site file (og:image and similar tags need one). */
 function absolute_url(string $path): string
 {
-    $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
-    $dir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
-    return ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $dir . '/' . ltrim($path, '/');
+    return site_url() . '/' . ltrim($path, '/');
 }
 
 function slugify(string $text): string

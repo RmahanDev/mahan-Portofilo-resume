@@ -260,6 +260,9 @@ function setting_groups(): array
                 'seo_blog_description'     => ['label' => 'توضیحات: وبلاگ', 'type' => 'text', 'col' => 6],
                 'seo_contact_title'        => ['label' => 'عنوان تب: تماس', 'type' => 'text', 'col' => 6],
                 'seo_contact_description'  => ['label' => 'توضیحات: تماس', 'type' => 'text', 'col' => 6],
+                'site_url'                 => ['label' => 'آدرس اصلی سایت (مثلا https://example.ir)', 'type' => 'text', 'col' => 12, 'dir' => 'ltr'],
+                'seo_google_verification'  => ['label' => 'کد تایید گوگل سرچ کنسول (فقط مقدار content)', 'type' => 'text', 'col' => 6, 'dir' => 'ltr'],
+                'seo_bing_verification'    => ['label' => 'کد تایید بینگ (فقط مقدار content)', 'type' => 'text', 'col' => 6, 'dir' => 'ltr'],
             ],
         ],
     ];

@@ -5,6 +5,7 @@ $prefix = '';
 $active = 'about';
 $title = setting('seo_index_title');
 $description = setting('seo_index_description');
+$schema = schema_page('ProfilePage', '', $title, $description, [], ['mainEntity' => ['@id' => site_url() . '/#person']]);
 
 $services = rows('SELECT * FROM services ORDER BY sort, id');
 $skills = rows('SELECT text FROM skills ORDER BY sort, id');
