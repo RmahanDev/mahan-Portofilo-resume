@@ -1,0 +1,64 @@
+<div class="caption-post">
+<div class="callout">
+<strong class="callout__title">کاملاً رایگان و آزاد برای همه</strong>
+<p>این افزونه رایگان و متن‌باز (GPL) است و برای دانلود هیچ لایسنس، ثبت‌نام یا پرداختی لازم نیست. <strong>همهٔ کاربران آزادند کدها را ویرایش کنند</strong>؛ سرویس پیامک تازه اضافه کنید، ظاهر فرم را عوض کنید، آن را در پروژه‌های خودتان یا مشتریان‌تان به کار ببرید و نسخهٔ ویرایش‌شده را با همان مجوز GPL منتشر کنید.</p>
+</div>
+
+<p><strong>Shainika SMS Auth</strong> ورود و ثبت‌نام با کد یک‌بارمصرف پیامکی (OTP) را به هر سایت وردپرسی اضافه می‌کند؛ با ووکامرس یا بدون آن و روی هر قالبی. کاربر فقط شمارهٔ موبایلش را وارد می‌کند، کد را از پیامک می‌گیرد و وارد می‌شود. نیازی به رمز عبور یا تأیید ایمیل نیست.</p>
+
+<h2 class="title title--h2">سرویس‌های پیامک</h2>
+<p>ارسال کد با سرویس‌های ایرانی زیر آماده است و هر سرویس دیگری را هم می‌توان با یک فیلتر ساده اضافه کرد:</p>
+<ul>
+<li><strong>ملی‌پیامک</strong> (خط خدماتی اشتراکی، ارسال با کد الگو)</li>
+<li><strong>کاوه‌نگار</strong> (<span class="ltr">Verify Lookup</span>)</li>
+<li><strong>sms.ir</strong> (ارسال وریفای)</li>
+<li><strong>IPPanel / فراز اس‌ام‌اس</strong> (پترن)</li>
+<li><strong>قاصدک</strong> (<span class="ltr">OTP</span>)</li>
+</ul>
+
+<h2 class="title title--h2">امکانات</h2>
+<ul class="checklist">
+<li>نمایش فرم با شورت‌کد <span class="ltr">[shainika_sms_auth]</span>، پاپ‌آپ، صفحهٔ ورود وردپرس و «حساب کاربری من» و تسویه‌حساب ووکامرس (کلاسیک و بلوکی).</li>
+<li>فیلدهای ثبت‌نام قابل انتخاب: نام، ایمیل، شمارهٔ دوم، آدرس، کد پستی و موقعیت روی نقشهٔ نشان؛ هر فیلد نمایش داده نشود، اختیاری یا الزامی.</li>
+<li>ظاهر قابل تنظیم از داشبورد با پیش‌نمایش زنده؛ سازگار با فارسی و انگلیسی (<span class="ltr">RTL</span> و <span class="ltr">LTR</span>).</li>
+<li>سازگار با کش صفحه (<span class="ltr">LiteSpeed</span>، <span class="ltr">WP Rocket</span> و مانند آنها).</li>
+<li>حالت آزمایشی: تا زمانی که سرویس تنظیم نشده پیامکی ارسال نمی‌شود و کد در صفحهٔ تنظیمات دیده می‌شود.</li>
+<li>هوک‌ها و فیلترهای کامل برای برنامه‌نویس‌ها، از جمله افزودن سرویس‌دهندهٔ دلخواه.</li>
+</ul>
+
+<h2 class="title title--h2">امنیت</h2>
+<ul>
+<li>کد فقط به‌صورت <span class="ltr">HMAC-SHA256</span> ذخیره می‌شود، یک‌بار مصرف است و هر کد حداکثر ۵ بار قابل امتحان است.</li>
+<li>محدودیت ارسال برای هر شماره، هر <span class="ltr">IP</span> و کل سایت، به‌علاوهٔ فاصلهٔ زمانی بین دو ارسال.</li>
+<li><span class="ltr">Honeypot</span> و توکن زمان‌دار فرم جلوی ربات‌ها را می‌گیرد.</li>
+<li>مدیر، ویرایشگر و هر نقشی که به مدیریت سایت دسترسی دارد هیچ‌وقت با پیامک وارد نمی‌شود و فقط با رمز عبور وارد می‌شود.</li>
+<li>کلیدهای سرویس را می‌توان به‌جای پایگاه داده در <span class="ltr">wp-config.php</span> گذاشت.</li>
+</ul>
+
+<h2 class="title title--h2">نصب و راه‌اندازی</h2>
+<ol class="steps">
+<li>فایل <span class="ltr">shainika-sms-auth.zip</span> را از همین صفحه دانلود کنید.</li>
+<li>از «افزونه‌ها ← افزودن ← بارگذاری افزونه» نصب و فعالش کنید.</li>
+<li>به «تنظیمات ← ورود پیامکی» بروید، سرویس‌دهنده را انتخاب کنید و اطلاعاتش (مثلاً نام کاربری، کلید <span class="ltr">API</span> و کد الگو) را وارد کنید.</li>
+<li>با دکمهٔ «ارسال یک پیامک واقعی» درستی تنظیمات را بسنجید.</li>
+<li>حالت را روی «فعال» بگذارید.</li>
+</ol>
+
+<div class="download-box">
+<span class="download-box__icon" aria-hidden="true"></span>
+<div class="download-box__info">
+<strong class="download-box__title">دانلود رایگان افزونهٔ Shainika SMS Auth</strong>
+<span class="download-box__meta"><span class="ltr">shainika-sms-auth.zip</span> · نسخهٔ <span class="ltr">1.0.0</span> · ۵۵ کیلوبایت · مجوز <span class="ltr">GPL v2+</span></span>
+</div>
+<a class="btn download-box__btn" href="assets/downloads/shainika-sms-auth.zip" download>دانلود رایگان</a>
+<p class="download-box__note">بدون هزینه، بدون لایسنس و بدون ثبت‌نام. کدها را آزادانه ویرایش و شخصی‌سازی کنید.</p>
+</div>
+
+<div class="callout">
+<strong class="callout__title">برای برنامه‌نویس‌ها</strong>
+<p>برای اتصال سرویس دیگر، سرویس‌دهنده را روی «سرویس دیگر» بگذارید و فیلتر <span class="ltr">shainika_sms_custom_send</span> را پیاده کنید، یا کلاسی از <span class="ltr">Shainika_SMS_Provider</span> بسازید و با فیلتر <span class="ltr">shainika_sms_providers</span> اضافه‌اش کنید. فهرست کامل هوک‌ها در فایل <span class="ltr">README.md</span> داخل افزونه آمده است.</p>
+</div>
+
+<h2 class="title title--h2">نیازمندی‌ها</h2>
+<p>وردپرس ۶٫۰ به بالا و PHP نسخهٔ ۷٫۴ به بالا؛ ووکامرس اختیاری است. سازندهٔ افزونه: ماهان رضائی، <span class="ltr">co.shainika.com</span>.</p>
+</div>
