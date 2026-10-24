@@ -11,6 +11,7 @@
  * $socialImage (absolute URL), $socialImageAlt, $ogType, $articleMeta [published, modified, section],
  * $schema (extra schema.org nodes).
  */
+redirect_to_canonical_host();
 $bodyClass  = $bodyClass ?? '';
 $scrollLine = $scrollLine ?? false;
 $extraHead  = $extraHead ?? '';
