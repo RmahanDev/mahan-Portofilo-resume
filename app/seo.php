@@ -207,3 +207,26 @@ function schema_page(string $type, string $path, string $name, string $descripti
     }
     return [$page];
 }
+
+/**
+ * Sends visitors who arrive on another host name (the old domain, www., ...) to the address saved as "site_url",
+ * so search engines only ever see one version of each page. Does nothing on localhost or IP addresses,
+ * for non-GET requests, or while no site URL is configured. Call it before any output.
+ */
+function redirect_to_canonical_host(): void
+{
+    $parts = parse_url(trim(setting('site_url')));
+    if (!is_array($parts) || empty($parts['host']) || !empty($parts['path']) && $parts['path'] !== '/') {
+        return;
+    }
+    if (!in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
+        return;
+    }
+    $host = strtolower((string) preg_replace('~:\d+$~', '', (string) ($_SERVER['HTTP_HOST'] ?? '')));
+    if ($host === '' || $host === strtolower($parts['host']) || strpos($host, '.') === false || filter_var($host, FILTER_VALIDATE_IP)) {
+        return;
+    }
+    $target = ($parts['scheme'] ?? 'https') . '://' . $parts['host'] . (isset($parts['port']) ? ':' . $parts['port'] : '');
+    header('Location: ' . $target . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
+    exit;
+}
