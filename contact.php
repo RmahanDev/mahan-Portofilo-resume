@@ -18,9 +18,6 @@ $extraHead = <<<HTML
     <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 
-    <script src="assets/js/mapbox-gl.js"></script>
-    <link href="assets/styles/mapbox-gl.css" rel="stylesheet" />
-
     <style>
         #phoneContact::placeholder {
             direction: rtl;
@@ -60,6 +57,7 @@ $extraScripts = <<<'HTML'
         });
     </script>
 HTML;
+$extraScripts = str_replace('mapbox.init.js', 'mapbox.init.js?v=' . ASSET_VERSION, $extraScripts);
 
 require __DIR__ . '/app/views/layout_top.php';
 ?>
@@ -69,6 +67,7 @@ require __DIR__ . '/app/views/layout_top.php';
                         </div>
 
                         <div class="map" id="map"></div>
+                        <p class="map-links"><a id="map-google" href="https://www.google.com/maps/search/?api=1&amp;query=<?= e(setting('map_lat', '35.828474')) ?>,<?= e(setting('map_lng', '50.969361')) ?>" target="_blank" rel="noopener"><i class="feathericon-map-pin"></i> مسیریابی با Google Maps</a></p>
 
                         <h2 class="title title--h2"><?= s('contact_form_title') ?></h2>
 

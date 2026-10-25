@@ -11,7 +11,7 @@ if (!$post) {
 }
 
 $active = 'blog';
-$title = $post['title'];
+$title = ($post['meta_title'] ?? '') !== '' ? $post['meta_title'] : $post['title'];
 $description = $post['meta_desc'] !== '' ? $post['meta_desc'] : ($post['excerpt'] !== '' ? $post['excerpt'] : meta_text($post['intro_html'] . ' ' . $post['body_html']));
 $scrollLine = true;
 $htmlDir = true;
