@@ -17,7 +17,8 @@ $scrollLine = true;
 $htmlDir = true;
 $ogType = 'article';
 $readMinutes = reading_minutes($post['intro_html'] . ' ' . $post['body_html']);
-$related = rows('SELECT slug, title, category, date_text, cover, excerpt FROM posts WHERE is_published = 1 AND id <> ? ORDER BY sort, id DESC LIMIT 2', [$post['id']]);
+$related = latest_posts(2, (int) $post['id']);
+$relatedProjects = related_projects(0, 3);
 
 $titleSuffix = true;
 $canonicalPath = 'Blogs/' . rawurlencode($post['slug']);
@@ -99,7 +100,7 @@ require __DIR__ . '/app/views/layout_top.php';
                             </footer>
 <?php if ($related): ?>
                             <section class="related-posts">
-                                <h2 class="title title--h2">بخوانید</h2>
+                                <h2 class="title title--h2">مقاله‌های مرتبط</h2>
                                 <div class="news-grid">
 <?php foreach ($related as $r): $rUrl = rawurlencode($r['slug']); ?>
                                     <article class="news-item box">
@@ -117,5 +118,10 @@ require __DIR__ . '/app/views/layout_top.php';
                                 </div>
                             </section>
 <?php endif; ?>
+<?php
+$linkHeading = 'نمونه‌کارهای من';
+$linkCards = array_map(static fn($r) => ['url' => '../Projects/' . rawurlencode($r['slug']), 'title' => $r['title'], 'image' => $r['cover'], 'label' => $r['label']], $relatedProjects);
+require __DIR__ . '/app/views/link_cards.php';
+?>
                         </div>
 <?php require __DIR__ . '/app/views/layout_bottom.php';
