@@ -9,7 +9,7 @@ define('ROOT_PATH', dirname(__DIR__));
 define('CONFIG_FILE', ROOT_PATH . '/config/config.php');
 define('UPLOAD_DIR', 'uploads');
 // Bump when a stylesheet/script changes so browsers fetch the new file after a deploy.
-define('ASSET_VERSION', '6');
+define('ASSET_VERSION', '7');
 
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Asia/Tehran');

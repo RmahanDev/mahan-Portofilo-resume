@@ -783,6 +783,51 @@ body::before {
 .map-links a { color: var(--color-accent); }
 .map-links a:hover { text-decoration: underline; }
 
+/* Boxed sections for project descriptions: a row of key facts and titled boxes. */
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 1.5rem 0;
+  padding: 0 !important;
+  list-style: none;
+}
+.fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  padding: 1rem .75rem !important;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-14);
+  background: var(--color-gradient-soft);
+  text-align: center;
+}
+.fact::before,
+.fact::after { content: none !important; display: none !important; }
+.fact__value { font-size: 1.35rem; line-height: 1.4; font-weight: 800; color: var(--color-accent); }
+.fact__label { font-size: .8rem; opacity: .8; }
+
+.info-box {
+  margin: 1.25rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-right: 4px solid var(--color-accent);
+  border-radius: var(--radius-14);
+  background: var(--color-surface-1);
+}
+.info-box > :last-child { margin-bottom: 0; }
+.info-box__title { margin: 0 0 .75rem; font-size: 1.15rem; line-height: 1.6; font-weight: 800; color: var(--color-heading); }
+.info-box--result { border-color: rgba(255, 219, 110, .3); background: linear-gradient(90deg, rgba(255, 219, 110, .03), rgba(255, 219, 110, .08)); }
+
+@media only screen and (max-width: 820px) {
+  .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media only screen and (max-width: 580px) {
+  .info-box { padding: 1rem 1.1rem; }
+}
+
 /* -----------------------------------------------------------------
     - Small screens
 ----------------------------------------------------------------- */
