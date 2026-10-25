@@ -38,7 +38,10 @@ function run_migrations(PDO $pdo): array
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
     // Two visitors may arrive together right after a deploy; only one of them migrates.
-    if (!(int) $pdo->query("SELECT GET_LOCK('portfolio_migrate', 0)")->fetchColumn()) {
+    $lock = $pdo->query("SELECT GET_LOCK('portfolio_migrate', 0)");
+    $got = (int) $lock->fetchColumn();
+    $lock->closeCursor();
+    if (!$got) {
         return [];
     }
 
@@ -70,7 +73,7 @@ function run_migrations(PDO $pdo): array
             ->execute(['schema_version', (string) end($names)]);
         $pdo->prepare('DELETE FROM settings WHERE k = ?')->execute(['migration_error']);
     } finally {
-        $pdo->query("SELECT RELEASE_LOCK('portfolio_migrate')");
+        $pdo->query("SELECT RELEASE_LOCK('portfolio_migrate')")->closeCursor();
     }
     return $applied;
 }

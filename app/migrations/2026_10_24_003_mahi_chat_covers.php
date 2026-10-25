@@ -20,15 +20,20 @@ return static function (PDO $pdo): void {
     foreach ($items as $slug => [$old, $cover, $header]) {
         $find->execute([$slug, $old, $old]);
         $id = (int) $find->fetchColumn();
+        $find->closeCursor();
         if ($id === 0) {
             continue;
         }
         $update->execute([$cover, $header, $id]);
 
         $has->execute([$id, $old]);
-        if ((int) $has->fetchColumn() === 0) {
+        $present = (int) $has->fetchColumn();
+        $has->closeCursor();
+        if ($present === 0) {
             $size = @getimagesize(dirname(__DIR__, 2) . '/' . $old) ?: [1920, 1080];
-            $next = (int) $pdo->query('SELECT COALESCE(MAX(sort), 0) + 1 FROM project_images WHERE project_id = ' . $id)->fetchColumn();
+            $max = $pdo->query('SELECT COALESCE(MAX(sort), 0) + 1 FROM project_images WHERE project_id = ' . $id);
+            $next = (int) $max->fetchColumn();
+            $max->closeCursor();
             $add->execute([$id, $old, (int) $size[0], (int) $size[1], $next]);
         }
     }

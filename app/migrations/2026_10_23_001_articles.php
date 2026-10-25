@@ -45,7 +45,9 @@ return static function (PDO $pdo): void {
     // Inserted oldest-first so the newest id (listed first) is the job-hunting guide.
     foreach ($articles as $a) {
         $exists->execute([$a['slug']]);
-        if ((int) $exists->fetchColumn() > 0) {
+        $found = (int) $exists->fetchColumn();
+        $exists->closeCursor();
+        if ($found > 0) {
             continue;
         }
         $insert->execute([
