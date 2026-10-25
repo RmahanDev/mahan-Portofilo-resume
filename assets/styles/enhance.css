@@ -776,6 +776,13 @@ body::before {
   .link-cards__grid { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* Contact map: free OpenStreetMap tiles, darkened to match the theme (the canvas only, so the marker keeps its colour). */
+.map .maplibregl-canvas { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); }
+.map .maplibregl-ctrl-attrib { font-size: .7rem; }
+.map-links { margin: .75rem 0 1.5rem; font-size: .9rem; }
+.map-links a { color: var(--color-accent); }
+.map-links a:hover { text-decoration: underline; }
+
 /* -----------------------------------------------------------------
     - Small screens
 ----------------------------------------------------------------- */
