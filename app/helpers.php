@@ -5,6 +5,26 @@
 
 declare(strict_types=1);
 
+// The host may run PHP 7.4 (INSTALL.md says 7.4 or newer): provide the PHP 8 string helpers when they are missing.
+if (!function_exists('str_contains')) {
+    function str_contains(string $haystack, string $needle): bool
+    {
+        return $needle === '' || strpos($haystack, $needle) !== false;
+    }
+}
+if (!function_exists('str_starts_with')) {
+    function str_starts_with(string $haystack, string $needle): bool
+    {
+        return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+if (!function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle): bool
+    {
+        return $needle === '' || substr($haystack, -strlen($needle)) === $needle;
+    }
+}
+
 function db(): PDO
 {
     static $pdo = null;
