@@ -22,6 +22,8 @@ function db_connect(string $host, string $name, string $user, string $pass, stri
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
+        // Some hosts default to unbuffered results, which makes a second query fail while a result is half read.
+        PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
     ]);
     // Keep NOW() in MySQL on the same clock as PHP (Asia/Tehran), whatever the server's zone is.
     $pdo->exec("SET time_zone = '" . date('P') . "'");
@@ -42,7 +44,9 @@ function rows(string $sql, array $params = []): array
 
 function row(string $sql, array $params = []): ?array
 {
-    $r = q($sql, $params)->fetch();
+    $stmt = q($sql, $params);
+    $r = $stmt->fetch();
+    $stmt->closeCursor();
     return $r === false ? null : $r;
 }
 

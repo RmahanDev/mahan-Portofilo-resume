@@ -32,7 +32,9 @@ return static function (PDO $pdo): void {
         ],
     ];
 
-    $category = (int) $pdo->query("SELECT id FROM categories WHERE slug = 'wordpress'")->fetchColumn();
+    $lookup = $pdo->query("SELECT id FROM categories WHERE slug = 'wordpress'");
+    $category = (int) $lookup->fetchColumn();
+    $lookup->closeCursor();
     $exists   = $pdo->prepare('SELECT COUNT(*) FROM projects WHERE slug = ?');
     $insert   = $pdo->prepare(
         'INSERT INTO projects (slug, title, card_category, cover, heading_html, header_image, client, category_label, date_text, body_html, meta_title, meta_desc, is_published, sort)
@@ -44,7 +46,9 @@ return static function (PDO $pdo): void {
     // Same sort value, so the lower id is listed first: Moaref goes in before the SMS plugin.
     foreach ($projects as $p) {
         $exists->execute([$p['slug']]);
-        if ((int) $exists->fetchColumn() > 0) {
+        $found = (int) $exists->fetchColumn();
+        $exists->closeCursor();
+        if ($found > 0) {
             continue;
         }
         $insert->execute([

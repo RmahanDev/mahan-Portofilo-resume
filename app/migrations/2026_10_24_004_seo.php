@@ -27,6 +27,7 @@ return static function (PDO $pdo): void {
     foreach ($new as $key => [$old, $value]) {
         $read->execute([$key]);
         $current = $read->fetchColumn();
+        $read->closeCursor();
         if ($current === false || $current === $old || $current === '') {
             $write->execute([$key, $value]);
         }

@@ -12,6 +12,7 @@ return static function (PDO $pdo): void {
     $stmt = $pdo->prepare('SELECT id FROM projects WHERE slug = ? AND cover = ? AND header_image = ?');
     $stmt->execute(['oloom', $old, $old]);
     $id = (int) $stmt->fetchColumn();
+    $stmt->closeCursor();
     if ($id === 0) {
         return;
     }
@@ -21,8 +22,12 @@ return static function (PDO $pdo): void {
 
     $has = $pdo->prepare('SELECT COUNT(*) FROM project_images WHERE project_id = ? AND path = ?');
     $has->execute([$id, $old]);
-    if ((int) $has->fetchColumn() === 0) {
-        $next = (int) $pdo->query('SELECT COALESCE(MAX(sort), 0) + 1 FROM project_images WHERE project_id = ' . $id)->fetchColumn();
+    $present = (int) $has->fetchColumn();
+    $has->closeCursor();
+    if ($present === 0) {
+        $max = $pdo->query('SELECT COALESCE(MAX(sort), 0) + 1 FROM project_images WHERE project_id = ' . $id);
+        $next = (int) $max->fetchColumn();
+        $max->closeCursor();
         $pdo->prepare('INSERT INTO project_images (project_id, path, width, height, sort) VALUES (?, ?, 1920, 1200, ?)')
             ->execute([$id, $old, $next]);
     }
