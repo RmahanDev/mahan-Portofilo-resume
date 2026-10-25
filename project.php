@@ -10,6 +10,10 @@ if (!$project) {
     not_found($prefix);
 }
 $images = rows('SELECT * FROM project_images WHERE project_id = ? ORDER BY sort, id', [$project['id']]);
+$categoryNames = project_category_names()[(int) $project['id']] ?? [];
+$categoryLabel = $project['category_label'] !== '' ? $project['category_label'] : implode('، ', $categoryNames);
+$relatedProjects = related_projects((int) $project['id'], 3);
+$relatedPosts = latest_posts(2);
 
 $active = 'portfolio';
 $title = $project['meta_title'] !== '' ? $project['meta_title'] : $project['title'];
@@ -36,7 +40,7 @@ $work = [
     'image'            => $image !== '' ? [$socialImage] : null,
     'dateCreated'      => $created,
     'dateModified'     => iso_datetime($project['updated_at']),
-    'genre'            => $project['category_label'] !== '' ? $project['category_label'] : null,
+    'genre'            => $categoryLabel !== '' ? $categoryLabel : null,
     'inLanguage'       => 'fa-IR',
     'creator'          => $person,
     'author'           => $person,
@@ -85,7 +89,7 @@ require __DIR__ . '/app/views/layout_top.php';
 <?php endif; ?>
                         </header>
 
-<?php if ($project['client'] !== '' || $project['category_label'] !== '' || $project['date_text'] !== ''): ?>
+<?php if ($project['client'] !== '' || $categoryLabel !== '' || $project['date_text'] !== ''): ?>
                         <ul class="details-info details-info--inline">
 <?php if ($project['client'] !== ''): ?>
                             <li class="details-info__item">
@@ -96,12 +100,12 @@ require __DIR__ . '/app/views/layout_top.php';
                                 </div>
                             </li>
 <?php endif; ?>
-<?php if ($project['category_label'] !== ''): ?>
+<?php if ($categoryLabel !== ''): ?>
                             <li class="details-info__item">
                                 <span class="box icon-box"><i class="font-icon feathericon-layers"></i></span>
                                 <div class="details-info__info">
                                     <span class="overhead">دسته بندی</span>
-                                    <?= e($project['category_label']) ?>
+                                    <?= e($categoryLabel) ?>
                                 </div>
                             </li>
 <?php endif; ?>
@@ -134,4 +138,13 @@ require __DIR__ . '/app/views/layout_top.php';
                             <div class="swiper-pagination"></div>
                         </div>
 <?php endif; ?>
+
+<?php
+$linkHeading = 'نمونه‌کارهای مرتبط';
+$linkCards = array_map(static fn($r) => ['url' => rawurlencode($r['slug']), 'title' => $r['title'], 'image' => $r['cover'], 'label' => $r['label']], $relatedProjects);
+require __DIR__ . '/app/views/link_cards.php';
+$linkHeading = 'مقاله‌های آموزشی';
+$linkCards = array_map(static fn($r) => ['url' => '../Blogs/' . rawurlencode($r['slug']), 'title' => $r['title'], 'image' => $r['cover'], 'label' => $r['category']], $relatedPosts);
+require __DIR__ . '/app/views/link_cards.php';
+?>
 <?php require __DIR__ . '/app/views/layout_bottom.php';

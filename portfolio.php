@@ -13,6 +13,15 @@ $projectCats = [];
 foreach (rows('SELECT pc.project_id, c.slug FROM project_categories pc JOIN categories c ON c.id = pc.category_id') as $r) {
     $projectCats[$r['project_id']][] = 'category-' . $r['slug'];
 }
+$projectCatNames = project_category_names();
+// A category with nothing published in it would be a dead filter button.
+$used = [];
+foreach ($projects as $project) {
+    foreach ($projectCats[$project['id']] ?? [] as $c) {
+        $used[$c] = true;
+    }
+}
+$categories = array_values(array_filter($categories, static fn($c) => isset($used['category-' . $c['slug']])));
 
 $items = [];
 foreach ($projects as $i => $project) {
@@ -56,7 +65,7 @@ require __DIR__ . '/app/views/layout_top.php';
                                     </div>
                                     <div class="gallery-grid__caption">
                                         <h3 class="title gallery-grid__title"><?= e($project['title']) ?></h3>
-                                        <span class="gallery-grid__category"><?= e($project['card_category']) ?></span>
+                                        <span class="gallery-grid__category"><?= e($project['card_category'] !== '' ? $project['card_category'] : ($projectCatNames[(int) $project['id']][0] ?? '')) ?></span>
                                     </div>
                                 </a>
                             </div>

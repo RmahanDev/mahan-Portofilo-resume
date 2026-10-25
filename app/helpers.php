@@ -145,3 +145,53 @@ function not_found(string $prefix = ''): void
     require __DIR__ . '/views/404.php';
     exit;
 }
+
+/**
+ * Published projects related to a project: the ones sharing the most categories come first, the rest fill up the list.
+ * With $projectId = 0 (a blog post asking for work samples) it is simply the newest projects.
+ */
+function related_projects(int $projectId, int $limit = 3): array
+{
+    $limit = max(1, $limit);
+    if ($projectId > 0) {
+        $found = rows(
+            'SELECT p.id, p.slug, p.title, p.cover, p.card_category, COUNT(pc.category_id) AS shared
+             FROM projects p
+             LEFT JOIN project_categories pc ON pc.project_id = p.id
+                  AND pc.category_id IN (SELECT category_id FROM project_categories WHERE project_id = ?)
+             WHERE p.is_published = 1 AND p.id <> ?
+             GROUP BY p.id, p.slug, p.title, p.cover, p.card_category, p.sort
+             ORDER BY shared DESC, p.sort, p.id
+             LIMIT ' . $limit,
+            [$projectId, $projectId]
+        );
+    } else {
+        $found = rows('SELECT id, slug, title, cover, card_category FROM projects WHERE is_published = 1 ORDER BY id DESC LIMIT ' . $limit);
+    }
+    // "label" is what a card shows under the title: the typed label, otherwise the primary category.
+    $names = project_category_names();
+    foreach ($found as &$p) {
+        $p['label'] = $p['card_category'] !== '' ? $p['card_category'] : ($names[(int) ($p['id'] ?? 0)][0] ?? '');
+    }
+    unset($p);
+    return $found;
+}
+
+/** Newest published blog posts, optionally leaving one out. */
+function latest_posts(int $limit = 2, int $exceptId = 0): array
+{
+    return rows(
+        'SELECT slug, title, category, date_text, cover, excerpt FROM posts WHERE is_published = 1 AND id <> ? ORDER BY sort, id DESC LIMIT ' . max(1, $limit),
+        [$exceptId]
+    );
+}
+
+/** Category names of every project, as project id => [name, ...], primary (lowest sort) first. */
+function project_category_names(): array
+{
+    $names = [];
+    foreach (rows('SELECT pc.project_id, c.name FROM project_categories pc JOIN categories c ON c.id = pc.category_id ORDER BY c.sort, c.id') as $r) {
+        $names[(int) $r['project_id']][] = $r['name'];
+    }
+    return $names;
+}
