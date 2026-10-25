@@ -13,7 +13,7 @@ return static function (PDO $pdo): void {
     $stmt->closeCursor();
 
     // The original body starts with a red inline-styled warning paragraph and has no boxed sections yet.
-    if (!$project || !str_contains((string) $project['body_html'], 'color: red; font-weight: bold') || str_contains((string) $project['body_html'], 'info-box')) {
+    if (!$project || strpos((string) $project['body_html'], 'color: red; font-weight: bold') === false || strpos((string) $project['body_html'], 'info-box') !== false) {
         return;
     }
 

@@ -48,7 +48,7 @@ return static function (PDO $pdo): void {
         $select->execute([$slug]);
         $post = $select->fetch(PDO::FETCH_ASSOC);
         $select->closeCursor();
-        if (!$post || str_contains((string) $post['body_html'], 'data-links="related"')) {
+        if (!$post || strpos((string) $post['body_html'], 'data-links="related"') !== false) {
             continue;
         }
 
@@ -62,7 +62,7 @@ return static function (PDO $pdo): void {
 
         // Inside the closing caption-post wrapper when the article has one, so the block matches the text column.
         $body = rtrim((string) $post['body_html']);
-        $wrapped = str_ends_with($body, '</div>') && str_starts_with(ltrim($body), '<div class="caption-post">');
+        $wrapped = substr($body, -6) === '</div>' && strpos(ltrim($body), '<div class="caption-post">') === 0;
         $body = $wrapped ? substr($body, 0, -strlen('</div>')) . $html . '</div>' : $body . "\n" . $html;
         $update->execute([$body, (int) $post['id']]);
     }
