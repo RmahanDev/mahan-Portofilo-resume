@@ -12,12 +12,13 @@ if (empty($linkCards)) {
                                 <div class="link-cards__grid">
 <?php foreach ($linkCards as $c): ?>
                                     <a class="link-card box" href="<?= e($c['url']) ?>">
-                                        <img class="link-card__image cover lazyload" src="<?= asset($c['image'], $prefix) ?>" alt="<?= e($c['title']) ?>" loading="lazy" decoding="async" />
+                                        <span class="link-card__media"><img class="link-card__image cover lazyload" src="<?= asset($c['image'], $prefix) ?>" alt="<?= e($c['title']) ?>" loading="lazy" decoding="async" /></span>
                                         <span class="link-card__body">
 <?php if ($c['label'] !== ''): ?>
                                             <span class="link-card__label"><?= e($c['label']) ?></span>
 <?php endif; ?>
                                             <span class="link-card__title"><?= e($c['title']) ?></span>
+                                            <span class="link-card__more"><?= e($linkMore ?? 'مشاهده') ?> ←</span>
                                         </span>
                                     </a>
 <?php endforeach; ?>

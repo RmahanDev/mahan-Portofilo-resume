@@ -141,9 +141,11 @@ require __DIR__ . '/app/views/layout_top.php';
 
 <?php
 $linkHeading = 'نمونه‌کارهای مرتبط';
+$linkMore = 'مشاهده نمونه‌کار';
 $linkCards = array_map(static fn($r) => ['url' => rawurlencode($r['slug']), 'title' => $r['title'], 'image' => $r['cover'], 'label' => $r['label']], $relatedProjects);
 require __DIR__ . '/app/views/link_cards.php';
 $linkHeading = 'مقاله‌های آموزشی';
+$linkMore = 'خواندن مقاله';
 $linkCards = array_map(static fn($r) => ['url' => '../Blogs/' . rawurlencode($r['slug']), 'title' => $r['title'], 'image' => $r['cover'], 'label' => $r['category']], $relatedPosts);
 require __DIR__ . '/app/views/link_cards.php';
 ?>
