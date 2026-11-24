@@ -963,3 +963,15 @@ body::before {
   .download-box { padding: 1.15rem; }
   .download-box__btn { width: 100%; text-align: center; }
 }
+
+/* Article figures and comparison tables (images carry no text; the caption does the explaining). */
+.caption-post .post-figure { margin: 1.75rem 0; }
+.caption-post .post-figure img { display: block; width: 100%; height: auto; border-radius: var(--radius-12); }
+.caption-post .post-figure figcaption { margin-top: .6rem; font-size: .85em; line-height: 1.8; text-align: center; opacity: .7; }
+.compare-table { width: 100%; margin: 0 0 1.5rem; border-collapse: separate; border-spacing: 0; font-size: .92em; }
+.compare-table th,
+.compare-table td { padding: .7rem .9rem; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, .08); vertical-align: top; }
+.compare-table thead th { color: var(--color-accent); font-weight: 800; background: var(--color-surface-2); }
+.compare-table thead th:first-child { border-top-right-radius: var(--radius-12); }
+.compare-table thead th:last-child { border-top-left-radius: var(--radius-12); }
+.compare-table tbody td:first-child { font-weight: 700; }
