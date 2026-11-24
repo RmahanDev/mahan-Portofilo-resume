@@ -13,6 +13,7 @@ $_menuItems = [
     ['projects', 'list.php?r=projects', 'feathericon-briefcase', 'نمونه کارها'],
     ['posts', 'list.php?r=posts', 'feathericon-edit', 'پست‌های وبلاگ'],
     ['skills', 'skills.php', 'feathericon-bar-chart-2', 'مهارت‌ها و درصدها'],
+    ['theme', 'theme.php', 'feathericon-sliders', 'تم و رنگ‌ها'],
 ];
 foreach (setting_groups() as $_gk => $_group) {
     $_menuItems[] = ['settings-' . $_gk, 'settings.php?g=' . $_gk, $_group['icon'], $_group['title']];
@@ -27,16 +28,15 @@ $_menuItems[] = ['account', 'account.php', 'feathericon-lock', 'حساب کار�
     <title><?= e($pageTitle) ?> | پنل مدیریت</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="../assets/images/favicons/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="../assets/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="shortcut icon" href="../assets/images/favicons/favicon.ico">
-    <link rel="apple-touch-icon" href="../assets/images/favicons/apple-touch-icon-180x180.png">
+<?= theme_favicon_tags('../', false) ?>
     <meta name="theme-color" content="#121212">
     <link rel="stylesheet" type="text/css" href="../assets/styles/vendors/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/rtl.css" />
     <link rel="stylesheet" type="text/css" href="../assets/styles/enhance.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="assets/admin.css?v=<?= ASSET_VERSION ?>" />
+<?= theme_style_tag('../', true) ?>
+<?= $extraHead ?? '' ?>
 </head>
 
 <body class="admin">

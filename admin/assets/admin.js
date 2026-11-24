@@ -129,3 +129,125 @@
         });
     });
 })();
+
+
+/* Theme page: color fields, live preview (CSS built by the server so it matches the site exactly), font preview. */
+(function () {
+    'use strict';
+    var form = document.getElementById('theme-colors-form');
+    if (!form) return;
+
+    var HEX = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
+    function normalize(v) {
+        v = (v || '').trim();
+        if (!HEX.test(v)) return null;
+        v = v.replace('#', '').toLowerCase();
+        if (v.length === 3) v = v[0] + v[0] + v[1] + v[1] + v[2] + v[2];
+        return '#' + v;
+    }
+
+    var fields = Array.prototype.slice.call(form.querySelectorAll('.theme-color'));
+    var timer = null;
+
+    function globalValue(key) {
+        var g = form.querySelector('[name="c[' + key + ']"]');
+        var wrap = g && g.closest('.theme-color');
+        return (g && normalize(g.value)) || (wrap && wrap.getAttribute('data-default')) || '#000000';
+    }
+
+    function paint(wrap) {
+        var text = wrap.querySelector('input[type="text"]');
+        var swatch = wrap.querySelector('.theme-color__swatch');
+        var hex = normalize(text.value);
+        var fallback = wrap.hasAttribute('data-inherit') ? globalValue(wrap.getAttribute('data-inherit')) : wrap.getAttribute('data-default');
+        swatch.value = hex || fallback;
+        if (wrap.hasAttribute('data-inherit')) text.placeholder = fallback;
+        text.classList.toggle('is-invalid', text.value.trim() !== '' && !hex);
+    }
+
+    function counts() {
+        form.querySelectorAll('.theme-section').forEach(function (sec) {
+            var n = 0;
+            sec.querySelectorAll('input[type="text"]').forEach(function (t) { if (normalize(t.value)) n++; });
+            var pill = sec.querySelector('[data-section-count]');
+            pill.textContent = n ? n + ' رنگ سفارشی' : 'پیش‌فرض';
+            pill.classList.toggle('admin-pill--on', n > 0);
+        });
+    }
+
+    function refresh() {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            var data = new FormData(form);
+            data.set('action', 'preview');
+            fetch('theme.php', { method: 'POST', body: data, credentials: 'same-origin' })
+                .then(function (r) { return r.text(); })
+                .then(function (css) { document.getElementById('theme-preview-style').textContent = css; })
+                .catch(function () {});
+        }, 120);
+    }
+
+    function changed(wrap) {
+        paint(wrap);
+        if (!wrap.hasAttribute('data-inherit')) {
+            // A global color changed: sections that still follow it show the new color.
+            fields.forEach(function (f) { if (f.getAttribute('data-inherit')) paint(f); });
+        }
+        counts();
+        refresh();
+    }
+
+    fields.forEach(function (wrap) {
+        var text = wrap.querySelector('input[type="text"]');
+        var swatch = wrap.querySelector('.theme-color__swatch');
+        text.addEventListener('input', function () { changed(wrap); });
+        swatch.addEventListener('input', function () { text.value = swatch.value; changed(wrap); });
+        wrap.querySelector('[data-theme-reset]').addEventListener('click', function () { text.value = ''; changed(wrap); });
+        paint(wrap);
+    });
+    counts();
+    refresh();
+
+    // Don't submit half-typed colors.
+    form.addEventListener('submit', function (e) {
+        var bad = form.querySelector('input.is-invalid');
+        if (bad) {
+            e.preventDefault();
+            var sec = bad.closest('details');
+            if (sec) sec.open = true;
+            bad.focus();
+            alert('یکی از رنگ‌ها معتبر نیست. مثال درست: #ff8800');
+        }
+    });
+})();
+
+/* Theme page: preview a chosen font file before saving, and a chosen favicon image. */
+(function () {
+    'use strict';
+    var n = 0;
+    document.querySelectorAll('[data-font-slot]').forEach(function (box) {
+        var input = box.querySelector('input[type="file"]');
+        var sample = box.querySelector('[data-font-sample]');
+        input.addEventListener('change', function () {
+            var file = input.files[0];
+            if (!file || !window.FontFace) return;
+            file.arrayBuffer().then(function (buf) {
+                var family = 'PF Preview ' + (++n);
+                return new FontFace(family, buf, { weight: '100 900' }).load().then(function (face) {
+                    document.fonts.add(face);
+                    sample.style.fontFamily = '"' + family + '", sans-serif';
+                });
+            }).catch(function () {
+                sample.style.fontFamily = '';
+                alert('این فایل به‌عنوان فونت خوانده نشد.');
+            });
+        });
+    });
+
+    var fav = document.getElementById('favicon_file');
+    if (fav) {
+        fav.addEventListener('change', function () {
+            if (fav.files[0]) document.getElementById('favicon-preview').src = URL.createObjectURL(fav.files[0]);
+        });
+    }
+})();

@@ -10,7 +10,7 @@
     <script src="../assets/js/jquery-3.4.1.min.js"></script>
     <script src="../assets/js/plugins.min.js"></script>
     <script src="../assets/js/common.js"></script>
-    <script src="assets/admin.js?v=1"></script>
+    <script src="assets/admin.js?v=<?= ASSET_VERSION ?>"></script>
 </body>
 
 </html>

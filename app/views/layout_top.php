@@ -67,7 +67,7 @@ $schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? 
     <meta name="msvalidate.01" content="<?= s('seo_bing_verification') ?>" />
 <?php endif; ?>
 
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="<?= e(theme_color('bg')) ?>">
     <meta name="color-scheme" content="dark">
 
     <meta name="twitter:card" content="summary_large_image">
@@ -102,13 +102,7 @@ $schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? 
 <?php endif; ?>
 <?php endif; ?>
 
-    <link rel="icon" href="<?= $p ?>assets/images/favicons/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="<?= $p ?>assets/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="<?= $p ?>assets/images/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="shortcut icon" href="<?= $p ?>assets/images/favicons/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= $p ?>assets/images/favicons/apple-touch-icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="<?= $p ?>assets/images/favicons/apple-touch-icon-152x152.png">
-    <link rel="manifest" href="<?= $p ?>assets/images/favicons/site.webmanifest">
+<?= theme_favicon_tags($p) ?>
 
     <script>
         (function (d) {
@@ -120,14 +114,19 @@ $schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? 
         })(document);
     </script>
 
+<?php if (!theme_has_custom_body_font()): ?>
     <link rel="preload" href="<?= $p ?>assets/fonts/IRY-Light.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="<?= $p ?>assets/fonts/IRY-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+<?php endif; ?>
+<?php if (theme_font_path('heading') === ''): ?>
     <link rel="preload" href="<?= $p ?>assets/fonts/Sarb-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<?php endif; ?>
 
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/vendors/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/style.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/rtl.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/enhance.css?v=<?= ASSET_VERSION ?>" />
+<?= theme_style_tag($p) ?>
 <?= $extraHead ?>
 <?php if ($schemaNodes): ?>
     <?= json_ld($schemaNodes) ?>
@@ -143,14 +142,14 @@ $schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? 
             <div class="preloader__logo">
                 <svg class="preloader__ring" viewBox="0 0 120 120" focusable="false">
                     <defs>
-                        <linearGradient id="pf-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFDB6E"/><stop offset="1" stop-color="#FFBC5E"/></linearGradient>
+                        <linearGradient id="pf-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--color-accent)"/><stop offset="1" style="stop-color:var(--color-accent-2)"/></linearGradient>
                     </defs>
                     <circle class="ring-track" cx="60" cy="60" r="54"/>
                     <circle class="ring-fill" cx="60" cy="60" r="54"/>
                 </svg>
                 <svg class="preloader__mark" viewBox="0 0 512 512" focusable="false">
                     <defs>
-                        <linearGradient id="pf-mark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFDB6E"/><stop offset="1" stop-color="#FFBC5E"/></linearGradient>
+                        <linearGradient id="pf-mark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--color-accent)"/><stop offset="1" style="stop-color:var(--color-accent-2)"/></linearGradient>
                     </defs>
                     <path pathLength="1" d="M132 380V150L256 296L380 150V380"/>
                 </svg>

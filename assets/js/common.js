@@ -386,7 +386,7 @@ $(document).ready(function() {
 
     $('textarea').niceScroll({
 		    horizrailenabled: false,
-        cursorcolor: "#383838",
+        cursorcolor: (getComputedStyle(document.documentElement).getPropertyValue('--color-border') || '').trim() || "#383838",
         cursorborder: '0',
         cursorwidth: '3px',
         railpadding: { top: 10, right: 2, left: 0, bottom: 10 }
