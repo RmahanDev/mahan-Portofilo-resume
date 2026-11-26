@@ -17,6 +17,9 @@ DirectoryIndex index.php
   RewriteCond %{THE_REQUEST} \s/+(resume|portfolio|blog|contact)\.php[\s?] [NC]
   RewriteRule ^ /%1 [R=301,L,NE]
 
+  # نقشه سایت قدیمی (sitemap_index.xml) که در Search Console ثبت شده بود، به نقشه فعلی منتقل شود
+  RewriteRule ^sitemap_index\.xml$ /sitemap.xml [R=301,L]
+
   # نقشه سایت، robots.txt و فید وبلاگ
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
   RewriteRule ^robots\.txt$ robots.php [L]
