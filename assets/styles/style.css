@@ -186,7 +186,8 @@ iframe {
   position: fixed;
   top: 0;
   width: 0;
-  z-index: 3;
+  /* Must sit above .sidebar (z-index: 10), otherwise the sticky intro card slides over the progress line. */
+  z-index: 1000;
 }
 
 /* -----------------------------------------------------------------
@@ -2847,7 +2848,7 @@ button:focus {
   position: fixed;
   top: 0;
   width: 0;
-  z-index: 3;
+  z-index: 1000;
 }
 
 .social-auth {
