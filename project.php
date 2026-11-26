@@ -71,7 +71,10 @@ ob_start();
 require __DIR__ . '/app/views/photoswipe.php';
 $beforeTop = ob_get_clean();
 
+$trackType = 'project';
+$trackId = (int) $project['id'];
 require __DIR__ . '/app/views/layout_top.php';
+$project['views'] = (int) ($project['views'] ?? 0) + ($trackCounted ? 1 : 0);
 ?>
 
                         <div class="pb-3">
@@ -89,7 +92,6 @@ require __DIR__ . '/app/views/layout_top.php';
 <?php endif; ?>
                         </header>
 
-<?php if ($project['client'] !== '' || $categoryLabel !== '' || $project['date_text'] !== ''): ?>
                         <ul class="details-info details-info--inline">
 <?php if ($project['client'] !== ''): ?>
                             <li class="details-info__item">
@@ -118,8 +120,14 @@ require __DIR__ . '/app/views/layout_top.php';
                                 </div>
                             </li>
 <?php endif; ?>
+                            <li class="details-info__item">
+                                <span class="box icon-box"><i class="font-icon feathericon-eye"></i></span>
+                                <div class="details-info__info">
+                                    <span class="overhead">بازدید</span>
+                                    <?= views_text($project['views']) ?>
+                                </div>
+                            </li>
                         </ul>
-<?php endif; ?>
 
                         <?= rich($project['body_html'], $prefix) ?>
 

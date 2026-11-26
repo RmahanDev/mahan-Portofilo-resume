@@ -65,7 +65,7 @@ require __DIR__ . '/app/views/layout_top.php';
                                     </div>
                                     <div class="gallery-grid__caption">
                                         <h3 class="title gallery-grid__title"><?= e($project['title']) ?></h3>
-                                        <span class="gallery-grid__category"><?= e($project['card_category'] !== '' ? $project['card_category'] : ($projectCatNames[(int) $project['id']][0] ?? '')) ?></span>
+                                        <span class="gallery-grid__category"><?= e($project['card_category'] !== '' ? $project['card_category'] : ($projectCatNames[(int) $project['id']][0] ?? '')) ?><em class="views-badge"><i class="feathericon-eye"></i><?= views_text($project['views'] ?? 0) ?></em></span>
                                     </div>
                                 </a>
                             </div>

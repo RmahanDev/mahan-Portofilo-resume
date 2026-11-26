@@ -1000,3 +1000,17 @@ body::before {
 .compare-table thead th:first-child { border-top-right-radius: var(--radius-12); }
 .compare-table thead th:last-child { border-top-left-radius: var(--radius-12); }
 .compare-table tbody td:first-child { font-weight: 700; }
+
+/* View counter on blog cards and portfolio cards (blog.php, portfolio.php). */
+.views-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-style: normal;
+  margin-right: .75rem;
+  padding-right: .75rem;
+  border-right: 1px solid var(--color-border);
+  line-height: 1;
+}
+.views-badge i { font-size: .85em; color: var(--color-accent); }
+.gallery-grid__category .views-badge { font-size: .8125rem; }

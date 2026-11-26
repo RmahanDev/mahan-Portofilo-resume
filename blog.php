@@ -34,7 +34,7 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <img class="cover lazyload" src="<?= asset($post['cover']) ?>" alt="<?= e($post['title']) ?>"<?= $i >= 3 ? ' loading="lazy" decoding="async"' : '' ?> />
                                 </div>
                                 <div class="news-item__caption">
-                                    <div class="news-item__date"><span><?= e($post['category']) ?></span><?= e($post['date_text']) ?></div>
+                                    <div class="news-item__date"><span><?= e($post['category']) ?></span><?= e($post['date_text']) ?><em class="views-badge"><i class="feathericon-eye"></i><?= views_text($post['views'] ?? 0) ?></em></div>
                                     <h2 class="title title--h2"><a href="<?= e($url) ?>"><?= e($post['title']) ?></a></h2>
                                     <p><?= e($post['excerpt']) ?></p>
                                 </div>

@@ -62,7 +62,10 @@ $schema = [
     ]),
 ];
 
+$trackType = 'post';
+$trackId = (int) $post['id'];
 require __DIR__ . '/app/views/layout_top.php';
+$post['views'] = (int) ($post['views'] ?? 0) + ($trackCounted ? 1 : 0);
 ?>
 
                         <div class="pb-0 pb-sm-2">
@@ -80,6 +83,7 @@ require __DIR__ . '/app/views/layout_top.php';
                                     <li><i class="feathericon-calendar"></i><?= e($post['date_text']) ?></li>
 <?php endif; ?>
                                     <li><i class="feathericon-clock"></i>زمان مطالعه: <?= fa_digits($readMinutes) ?> دقیقه</li>
+                                    <li><i class="feathericon-eye"></i><?= views_text($post['views']) ?> بازدید</li>
                                 </ul>
 <?php if (trim($post['intro_html']) !== ''): ?>
                                 <div class="caption-post">

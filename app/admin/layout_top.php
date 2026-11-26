@@ -10,6 +10,7 @@ $menu = $menu ?? '';
 $_menuItems = [
     ['dashboard', 'index.php', 'feathericon-grid', 'داشبورد'],
     ['messages', 'messages.php', 'feathericon-inbox', 'پیام‌ها'],
+    ['stats', 'stats.php', 'feathericon-activity', 'آمار بازدید'],
     ['projects', 'list.php?r=projects', 'feathericon-briefcase', 'نمونه کارها'],
     ['posts', 'list.php?r=posts', 'feathericon-edit', 'پست‌های وبلاگ'],
     ['skills', 'skills.php', 'feathericon-bar-chart-2', 'مهارت‌ها و درصدها'],

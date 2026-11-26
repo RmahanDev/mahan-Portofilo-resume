@@ -9,7 +9,7 @@ define('ROOT_PATH', dirname(__DIR__));
 define('CONFIG_FILE', ROOT_PATH . '/config/config.php');
 define('UPLOAD_DIR', 'uploads');
 // Bump when a stylesheet/script changes so browsers fetch the new file after a deploy.
-define('ASSET_VERSION', '9');
+define('ASSET_VERSION', '10');
 
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Asia/Tehran');
@@ -18,6 +18,7 @@ require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/jalali.php';
 require_once __DIR__ . '/seo.php';
 require_once __DIR__ . '/theme.php';
+require_once __DIR__ . '/analytics.php';
 
 if (!is_file(CONFIG_FILE)) {
     // Fresh host: send the visitor to the web installer.

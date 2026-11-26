@@ -10,8 +10,11 @@
  * Optional per-page SEO variables: $titleSuffix (append the site name), $canonicalPath, $robots,
  * $socialImage (absolute URL), $socialImageAlt, $ogType, $articleMeta [published, modified, section],
  * $schema (extra schema.org nodes).
+ * Statistics: $trackType (page|post|project) and $trackId; sets $trackCounted when this view was counted.
  */
 redirect_to_canonical_host();
+// Counts this page view; post.php and project.php set $trackType/$trackId so the view is added to that item.
+$trackCounted = http_response_code() !== 404 && track_visit($trackType ?? 'page', (int) ($trackId ?? 0));
 $bodyClass  = $bodyClass ?? '';
 $scrollLine = $scrollLine ?? false;
 $extraHead  = $extraHead ?? '';
