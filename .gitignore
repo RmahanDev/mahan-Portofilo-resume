@@ -5,3 +5,5 @@
 !/uploads/.gitkeep
 !/uploads/.htaccess
 .idea/workspace.xml
+# macOS Finder metadata
+.DS_Store
