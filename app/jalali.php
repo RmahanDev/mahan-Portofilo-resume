@@ -29,10 +29,16 @@ function gregorian_to_jalali(int $gy, int $gm, int $gd): array
     return [$jy, $jm, $jd];
 }
 
+/** Persian names of the twelve Jalali months, starting with فروردین. */
+function jalali_month_names(): array
+{
+    return ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+        'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+}
+
 function jalali_date(?int $timestamp = null): string
 {
-    $months = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-        'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+    $months = jalali_month_names();
     $t = $timestamp ?? time();
     [$y, $m, $d] = gregorian_to_jalali((int) date('Y', $t), (int) date('n', $t), (int) date('j', $t));
     return sprintf('%02d %s %d', $d, $months[$m - 1], $y);

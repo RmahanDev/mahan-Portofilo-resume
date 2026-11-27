@@ -19,6 +19,7 @@ require_once __DIR__ . '/jalali.php';
 require_once __DIR__ . '/seo.php';
 require_once __DIR__ . '/theme.php';
 require_once __DIR__ . '/analytics.php';
+require_once __DIR__ . '/schedule.php';
 
 if (!is_file(CONFIG_FILE)) {
     // Fresh host: send the visitor to the web installer.
@@ -39,3 +40,5 @@ if (!empty($GLOBALS['CONFIG']['debug'])) {
 // Bring an older installed database up to date after a deploy (no-op when nothing is pending).
 require_once __DIR__ . '/migrate.php';
 auto_migrate();
+// Items whose scheduled time has come become public on the first request after it.
+publish_due_items();

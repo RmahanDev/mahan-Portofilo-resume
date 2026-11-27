@@ -24,6 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data[$name] = read_field($name, $def);
         }
 
+        // A scheduled item stays a draft until its time, whatever the publish switch says.
+        if (($data['publish_at'] ?? null) !== null) {
+            schedule_check_allowed($item);
+            $data['is_published'] = 0;
+            if (array_key_exists('date_text', $data)) {
+                $data['date_text'] = schedule_date_text($data['date_text'], $item ?? [], $data['publish_at']);
+            }
+        }
+
         foreach ($columns as $name => $def) {
             if ($def['type'] !== 'slug') {
                 continue;
@@ -77,7 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         db()->commit();
 
-        flash('success', $res['singular'] . ' ذخیره شد.');
+        if (($data['publish_at'] ?? null) !== null) {
+            flash('success', $res['singular'] . ' ذخیره شد و در ' . schedule_label($data['publish_at']) . ' منتشر می‌شود.');
+        } else {
+            flash('success', $res['singular'] . ' ذخیره شد.');
+        }
         redirect('edit.php?r=' . $res['key'] . '&id=' . $id);
     } catch (RuntimeException $ex) {
         if (db()->inTransaction()) {

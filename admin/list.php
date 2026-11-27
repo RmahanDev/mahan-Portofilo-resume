@@ -70,7 +70,7 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
 <?php if ($label === 'image'): ?>
                                         <td class="admin-table__thumb"><?php if ($v !== ''): ?><img src="<?= asset($v, '../') ?>" alt=""><?php endif; ?></td>
 <?php elseif ($def['type'] === 'bool'): ?>
-                                        <td data-label="<?= e($label) ?>"><span class="admin-pill<?= $v ? ' admin-pill--on' : '' ?>"><?= $v ? 'نمایش' : 'پیش‌نویس' ?></span></td>
+                                        <td data-label="<?= e($label) ?>"><span class="admin-pill<?= $v ? ' admin-pill--on' : '' ?>"><?= $v ? 'نمایش' : (!empty($item['publish_at']) ? 'منتشر در ' . e(schedule_label($item['publish_at'])) : 'پیش‌نویس') ?></span></td>
 <?php elseif ($def['type'] === 'select'): ?>
                                         <td data-label="<?= e($label) ?>"><?= e(field_options($def)[$v] ?? $v) ?></td>
 <?php elseif ($def['type'] === 'percent'): ?>

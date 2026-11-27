@@ -27,6 +27,9 @@ function field_options(array $def): array
 /** Renders one field wrapped in a Bootstrap column. */
 function render_field(string $name, array $def, $value): string
 {
+    if ($def['type'] === 'schedule') {
+        return render_schedule($name, $def, $value);
+    }
     $id = 'f_' . $name;
     $label = '<label class="admin-label" for="' . $id . '">' . e($def['label'])
         . (!empty($def['required']) ? ' <span class="admin-required">*</span>' : '') . '</label>';
@@ -118,6 +121,71 @@ function render_field(string $name, array $def, $value): string
 }
 
 /**
+ * Scheduled publish time: a switch, then Jalali day, month, year, hour and minute selects.
+ * $stored is the Tehran datetime saved with the item, or empty when nothing is scheduled.
+ */
+function render_schedule(string $name, array $def, $stored): string
+{
+    // After a rejected submit $stored is the posted array; the form then shows the posted values instead.
+    $storedText = is_string($stored) && $stored !== '' ? $stored : null;
+    $state = schedule_form_state($name, $storedText);
+    $id = 'f_' . $name;
+    $nowYear = schedule_parts(time())[0];
+
+    $years = array_unique(array_merge(range($nowYear, $nowYear + 3), [$state['year']]));
+    sort($years);
+
+    $dayOptions = [];
+    for ($d = 1; $d <= 31; $d++) {
+        $dayOptions[$d] = fa_digits((string) $d);
+    }
+    $monthOptions = [];
+    foreach (jalali_month_names() as $i => $month) {
+        $monthOptions[$i + 1] = $month;
+    }
+    $yearOptions = [];
+    foreach ($years as $y) {
+        $yearOptions[$y] = fa_digits((string) $y);
+    }
+    $hourOptions = [];
+    for ($h = 0; $h < 24; $h++) {
+        $hourOptions[$h] = fa_digits(sprintf('%02d', $h));
+    }
+    $minuteOptions = [];
+    for ($m = 0; $m < 60; $m++) {
+        $minuteOptions[$m] = fa_digits(sprintf('%02d', $m));
+    }
+
+    $picker = static function (string $part, string $label, string $width, array $options, int $selected) use ($name): string {
+        $control = $name . '_' . $part;
+        $html = '<div class="' . $width . '"><label class="admin-label" for="f_' . $control . '">' . e($label) . '</label>'
+            . '<select class="custom-select" id="f_' . $control . '" name="' . $control . '">';
+        foreach ($options as $value => $text) {
+            $html .= '<option value="' . (int) $value . '"' . ((int) $value === $selected ? ' selected' : '') . '>' . e($text) . '</option>';
+        }
+        return $html . '</select></div>';
+    };
+
+    $help = isset($def['help']) ? '<div class="admin-help">' . e($def['help']) . '</div>' : '';
+
+    return '<div class="col-12"><div class="form-group">'
+        . '<label class="admin-label">' . e($def['label']) . '</label>'
+        . '<div class="form-check form-switch admin-switch">'
+        . '<input class="form-check-input" type="checkbox" role="switch" id="' . $id . '_on" name="' . $name . '_on" value="1"' . ($state['on'] ? ' checked' : '') . '>'
+        . '<label class="form-check-label" for="' . $id . '_on">منتشر شود در زمان مشخص (تا آن زمان پیش‌نویس می‌ماند)</label>'
+        . '</div>'
+        . '<div class="row">'
+        . $picker('day', 'روز', 'col-6 col-md-2', $dayOptions, $state['day'])
+        . $picker('month', 'ماه', 'col-6 col-md-4', $monthOptions, $state['month'])
+        . $picker('year', 'سال', 'col-6 col-md-2', $yearOptions, $state['year'])
+        . $picker('hour', 'ساعت', 'col-6 col-md-2', $hourOptions, $state['hour'])
+        . $picker('minute', 'دقیقه', 'col-6 col-md-2', $minuteOptions, $state['minute'])
+        . '</div>'
+        . $help
+        . '</div></div>';
+}
+
+/**
  * Reads a posted value for a field. Uploaded files replace the typed path.
  *
  * @throws RuntimeException with a user-facing message on invalid input
@@ -143,6 +211,8 @@ function read_field(string $name, array $def)
                 throw new RuntimeException('مقدار «' . $def['label'] . '» معتبر نیست.');
             }
             return $raw;
+        case 'schedule':
+            return schedule_read_post($name);
         case 'slug':
             $slug = strtolower(preg_replace('~[^A-Za-z0-9_\-]+~', '-', $raw));
             return trim($slug, '-');
