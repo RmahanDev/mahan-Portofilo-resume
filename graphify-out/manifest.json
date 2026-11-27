@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1795717332.819671,
-    "seen": 1795766151.8679643,
-    "ast_hash": "dfe5fa7939121e96d61b54077cc9ab84",
+    "mtime": 1795772724.6019144,
+    "seen": 1795772998.6583536,
+    "ast_hash": "74b6fa1c91347431ba1860254872b9b7",
     "semantic_hash": ""
   },
   "INSTALL.md": {
@@ -1662,9 +1662,9 @@
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-learning-roadmap.body.html": {
-    "mtime": 1795766143.745099,
-    "seen": 1795766151.869352,
-    "ast_hash": "a5e38079d33864486d5fa7c830ac6a16",
+    "mtime": 1795772465.3232236,
+    "seen": 1795772700.3465476,
+    "ast_hash": "1f44b3ddf54c0855cc4f369cb227a0f4",
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-learning-roadmap.intro.html": {
@@ -1710,33 +1710,33 @@
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-learning-roadmap-cover.jpg": {
-    "mtime": 1795765853.0307765,
-    "seen": 1795766151.8760307,
-    "ast_hash": "1e63d4affb554acf063a46cf693bd9b0",
+    "mtime": 1795772465.2743971,
+    "seen": 1795772700.3533192,
+    "ast_hash": "b2fc16d6e409aa4108a6e10611115e9f",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-learning-roadmap-header.jpg": {
-    "mtime": 1795765853.033023,
-    "seen": 1795766151.8760316,
-    "ast_hash": "78de1cc851d9316180d435e481d466ae",
+    "mtime": 1795772465.2769845,
+    "seen": 1795772700.3533201,
+    "ast_hash": "95aed74b469170bfd246ed96cc4511ad",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-learning-roadmap-internship.jpg": {
-    "mtime": 1795765853.036435,
-    "seen": 1795766151.8760328,
-    "ast_hash": "e3b7eb5a8a6c9c7c99307af21f50dead",
+    "mtime": 1795772465.282173,
+    "seen": 1795772700.3533213,
+    "ast_hash": "ebf06ec62c57c90463f7e2a641f1f54f",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-learning-roadmap-path.jpg": {
-    "mtime": 1795765853.0348375,
-    "seen": 1795766151.8760338,
-    "ast_hash": "f5a74b8701825cf04a8b588fcef39e96",
+    "mtime": 1795772465.2799256,
+    "seen": 1795772700.3533223,
+    "ast_hash": "d6d6e22f6637c83dfb15f0e653106087",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-learning-roadmap-tools.jpg": {
-    "mtime": 1795765853.0380776,
-    "seen": 1795766151.8760345,
-    "ast_hash": "d56b9f7ccb896b9627a0958dbb3a15bd",
+    "mtime": 1795772465.2840037,
+    "seen": 1795772700.3533232,
+    "ast_hash": "deefd52bdc537c16cfd12542f47c891e",
     "semantic_hash": ""
   },
   "app/views/contact_items.php": {
