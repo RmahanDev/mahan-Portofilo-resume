@@ -689,7 +689,7 @@ body::before {
 .caption-post img,
 .gallery-post img { max-width: 100%; height: auto; }
 .caption-post pre { overflow-x: auto; padding: 1rem; border-radius: var(--radius-12); background: var(--color-surface-2); direction: ltr; text-align: left; }
-.caption-post table { display: block; max-width: 100%; overflow-x: auto; }
+.caption-post table:not(.compare-table) { display: block; max-width: 100%; overflow-x: auto; }
 
 .caption-post ul,
 .caption-post ol { margin: 0 0 1.25rem; padding: 0 1.4rem 0 0; }
@@ -993,13 +993,80 @@ body::before {
 .caption-post .post-figure { margin: 1.75rem 0; }
 .caption-post .post-figure img { display: block; width: 100%; height: auto; border-radius: var(--radius-12); }
 .caption-post .post-figure figcaption { margin-top: .6rem; font-size: .85em; line-height: 1.8; text-align: center; opacity: .7; }
-.compare-table { width: 100%; margin: 0 0 1.5rem; border-collapse: separate; border-spacing: 0; font-size: .92em; }
-.compare-table th,
-.compare-table td { padding: .7rem .9rem; text-align: right; border-bottom: 1px solid rgba(var(--color-line-rgb), .08); vertical-align: top; }
-.compare-table thead th { color: var(--color-accent); font-weight: 800; background: var(--color-surface-2); }
-.compare-table thead th:first-child { border-top-right-radius: var(--radius-12); }
-.compare-table thead th:last-child { border-top-left-radius: var(--radius-12); }
-.compare-table tbody td:first-child { font-weight: 700; }
+/* Comparison tables. Desktop: a rounded card with a clear header row. Phones (640px and below): every row
+   becomes a card and each cell shows its column name (data-label, added by assets/js/article-tables.js),
+   so nothing has to be scrolled sideways. */
+.caption-post .compare-table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.75rem 0;
+  border: 1px solid rgba(var(--color-line-rgb), .1);
+  border-radius: var(--radius-14);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-surface-1);
+  overflow: hidden;
+  font-size: .92em;
+  line-height: 1.8;
+}
+.caption-post .compare-table th,
+.caption-post .compare-table td {
+  padding: .8rem 1rem;
+  text-align: right;
+  vertical-align: top;
+  overflow-wrap: break-word; /* wrap between words; split a word only when it cannot fit at all */
+  border-bottom: 1px solid rgba(var(--color-line-rgb), .08);
+}
+.caption-post .compare-table thead th {
+  color: var(--color-accent);
+  font-weight: 800;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid rgba(var(--color-accent-rgb), .3);
+}
+.caption-post .compare-table tbody tr:last-child td { border-bottom: 0; }
+.caption-post .compare-table tbody td:first-child { font-weight: 700; color: var(--color-heading); }
+@media only screen and (max-width: 640px) {
+  .caption-post .compare-table,
+  .caption-post .compare-table tbody { display: block; border: 0; background: none; overflow: visible; }
+  .caption-post .compare-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .caption-post .compare-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(var(--color-line-rgb), .1);
+    border-radius: var(--radius-14);
+    background: var(--color-surface-1);
+    overflow: hidden;
+  }
+  .caption-post .compare-table td {
+    display: block;
+    padding: .7rem 1rem;
+    border-bottom: 1px dashed rgba(var(--color-line-rgb), .12);
+  }
+  .caption-post .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: .2rem;
+    font-size: .8em;
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+  .caption-post .compare-table tbody td:first-child {
+    padding: .8rem 1rem;
+    background: var(--color-surface-2);
+    border-bottom: 1px solid rgba(var(--color-accent-rgb), .3);
+    color: var(--color-heading);
+  }
+  .caption-post .compare-table tbody td:first-child::before { content: none; }
+  .caption-post .compare-table tbody td:last-child { border-bottom: 0; }
+}
 
 /* View counter on blog cards and portfolio cards (blog.php, portfolio.php). */
 .views-badge {

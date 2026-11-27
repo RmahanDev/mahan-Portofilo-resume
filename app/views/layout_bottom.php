@@ -23,6 +23,7 @@ $p = $prefix;
     <script src="<?= $p ?>assets/js/plugins.min.js?v=<?= ASSET_VERSION ?>"></script>
     <script src="<?= $p ?>assets/js/common.js?v=<?= ASSET_VERSION ?>"></script>
     <script src="<?= $p ?>assets/js/enhance.js?v=<?= ASSET_VERSION ?>"></script>
+    <script src="<?= $p ?>assets/js/article-tables.js?v=<?= ASSET_VERSION ?>"></script>
 <?= $extraScripts ?? '' ?>
 </body>
 
