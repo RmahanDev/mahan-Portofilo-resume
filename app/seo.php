@@ -153,6 +153,14 @@ function schema_site_nodes(array $socials): array
     if ($avatar !== '') {
         $person['image'] = absolute_url($avatar);
     }
+    $telephone = phone_international(setting('contact_phone'));
+    if ($telephone !== '') {
+        $person['telephone'] = $telephone;
+    }
+    $contactEmail = trim(setting('contact_email'));
+    if (filter_var($contactEmail, FILTER_VALIDATE_EMAIL)) {
+        $person['email'] = $contactEmail;
+    }
     if ($same) {
         $person['sameAs'] = $same;
     }

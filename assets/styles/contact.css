@@ -1,0 +1,166 @@
+/*
+ * Contact details: the site footer (every page), the contact page block and the home page call-to-action.
+ * Colors come only from the theme variables that style.css already defines, so the theme set in admin still applies.
+ */
+
+/* Contact lists: the sidebar's .details-info rows, laid out as a grid. */
+.site-footer__list,
+.contact-details__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media only screen and (max-width: 1199px) {
+  .site-footer__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .site-footer__list,
+  .contact-details__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.site-footer__list .details-info__item,
+.contact-details__list .details-info__item {
+  margin: 0 !important;
+  min-width: 0;
+  white-space: normal;
+}
+
+.site-footer__list .contacts-block__info,
+.contact-details__list .contacts-block__info {
+  min-width: 0;
+}
+
+/* Values wrap instead of being cut off, and the row is tall enough to tap comfortably. */
+.site-footer__list .text-overflow,
+.contact-details__list .text-overflow {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  padding: .65rem 0;
+}
+
+.site-footer__list a.text-overflow,
+.contact-details__list a.text-overflow {
+  color: var(--color-heading);
+  text-decoration: none;
+}
+
+.site-footer__list a.text-overflow:hover,
+.contact-details__list a.text-overflow:hover {
+  color: var(--color-accent);
+}
+
+.site-footer__address,
+.contact-details__address {
+  font-style: normal;
+  margin: 0;
+}
+
+/* Site footer */
+.site-footer {
+  padding-bottom: 2.5rem;
+}
+
+.site-footer__title {
+  margin-bottom: 1.25rem;
+}
+
+.site-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__social .social__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0;
+  border-radius: var(--radius-12);
+}
+
+@media only screen and (max-width: 580px) {
+  /* Keeps the last row clear of the fixed back-to-top button. */
+  .site-footer {
+    padding-bottom: 4.5rem;
+  }
+}
+
+/* Home page call-to-action */
+.home-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.home-cta__text {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.home-cta__title {
+  margin-bottom: .5rem;
+}
+
+.home-cta__caption {
+  margin: 0;
+  color: var(--color-paragraph);
+  line-height: 1.9;
+}
+
+.home-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.home-cta__btn .font-icon {
+  margin: 0;
+}
+
+@media only screen and (max-width: 580px) {
+  .home-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-cta__text {
+    flex: 0 0 auto;
+  }
+
+  .home-cta__btn {
+    justify-content: center;
+  }
+}
+
+/* Keyboard focus on the new links */
+.site-footer a:focus-visible,
+.contact-details a:focus-visible,
+.home-cta a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-12);
+}

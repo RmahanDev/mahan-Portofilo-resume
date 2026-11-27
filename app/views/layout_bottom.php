@@ -14,6 +14,7 @@ $p = $prefix;
             </div>
         </div>
     </main>
+<?php require __DIR__ . '/site_footer.php'; ?>
 <?= $beforeTop ?? '' ?>
 
     <div class="back-to-top"></div>

@@ -40,6 +40,14 @@ require __DIR__ . '/app/views/layout_top.php';
                             <?= setting('about_html') ?>
                         </div>
 
+                        <section class="home-cta box box-inner" aria-labelledby="home-cta-title">
+                            <div class="home-cta__text">
+                                <h2 id="home-cta-title" class="title title--h2 home-cta__title">پروژه یا همکاری دارید؟</h2>
+                                <p class="home-cta__caption">برای مشاوره، سفارش پروژه یا همکاری، پیام خود را از صفحه تماس ارسال کنید یا مستقیم با شماره تلفن من تماس بگیرید.</p>
+                            </div>
+                            <a class="btn home-cta__btn" href="contact"><i class="font-icon icon-phone" aria-hidden="true"></i> تماس با من</a>
+                        </section>
+
 <?php if ($services): ?>
                         <h2 class="title title--h2 mt-3"><?= s('services_title') ?></h2>
                         <div class="row">

@@ -140,6 +140,50 @@ function reading_minutes(string $html): int
     return max(1, (int) ceil(count($words) / 180));
 }
 
+/**
+ * Phone number as an international number, for tel: links and structured data.
+ * Examples: 09908781565 -> +989908781565, 02112345678 -> +982112345678.
+ * Returns '' when no usable number is found.
+ */
+function phone_international(string $raw): string
+{
+    $latin = strtr($raw, [
+        '۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4',
+        '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
+        '٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4',
+        '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
+    ]);
+    $number = preg_replace('~[^\d+]~', '', $latin) ?? '';
+    if (preg_match('~^(?:\+|00)?98(\d{9,10})$~', $number, $m)) {
+        return '+98' . $m[1];
+    }
+    if (preg_match('~^0(\d{9,10})$~', $number, $m)) {
+        return '+98' . $m[1];
+    }
+    if (preg_match('~^\+\d{7,15}$~', $number)) {
+        return $number;
+    }
+    return '';
+}
+
+/** Accessible name of a profile link, taken from its host: https://github.com/name -> GitHub. */
+function social_label(array $social): string
+{
+    static $names = [
+        'github' => 'GitHub', 'gitlab' => 'GitLab', 'linkedin' => 'LinkedIn', 'x' => 'X',
+        'twitter' => 'X (Twitter)', 'instagram' => 'Instagram', 'facebook' => 'Facebook',
+        'telegram' => 'Telegram', 'youtube' => 'YouTube', 'aparat' => 'Aparat',
+        'behance' => 'Behance', 'dribbble' => 'Dribbble', 'threads' => 'Threads',
+    ];
+    $host = strtolower((string) parse_url((string) ($social['url'] ?? ''), PHP_URL_HOST));
+    $host = preg_replace('~^www\.~', '', $host) ?? '';
+    $name = explode('.', $host)[0];
+    if ($name === '') {
+        return 'پروفایل';
+    }
+    return $names[$name] ?? ucfirst($name);
+}
+
 /** Absolute URL of a site file (og:image and similar tags need one). */
 function absolute_url(string $path): string
 {

@@ -66,6 +66,15 @@ require __DIR__ . '/app/views/layout_top.php';
                             <h1 class="title title--h1 title__separate"><?= s('contact_title') ?></h1>
                         </div>
 
+                        <section class="contact-details box box-inner" aria-labelledby="contact-details-title">
+                            <h2 id="contact-details-title" class="title title--h2">اطلاعات تماس</h2>
+                            <address class="contact-details__address">
+                                <ul class="details-info contact-details__list">
+<?php require __DIR__ . '/app/views/contact_items.php'; ?>
+                                </ul>
+                            </address>
+                        </section>
+
                         <div class="map" id="map"></div>
                         <p class="map-links"><a id="map-google" href="https://www.google.com/maps/search/?api=1&amp;query=<?= e(setting('map_lat', '35.828474')) ?>,<?= e(setting('map_lng', '50.969361')) ?>" target="_blank" rel="noopener"><i class="feathericon-map-pin"></i> مسیریابی با Google Maps</a></p>
 

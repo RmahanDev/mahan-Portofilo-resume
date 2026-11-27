@@ -129,6 +129,7 @@ $schemaNodes = $indexable ? array_merge(schema_site_nodes($socials), $schema ?? 
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/style.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/rtl.css?v=<?= ASSET_VERSION ?>" />
     <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/enhance.css?v=<?= ASSET_VERSION ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= $p ?>assets/styles/contact.css?v=<?= ASSET_VERSION ?>" />
 <?= theme_style_tag($p) ?>
 <?= $extraHead ?>
 <?php if ($schemaNodes): ?>
