@@ -539,6 +539,12 @@ body::before {
   .main { padding-bottom: calc(3.75rem + var(--pf-safe-bottom)); }
 }
 
+/* On phones the footer already keeps its last row clear of the bar (site-footer padding), so the page
+   gap above the footer can be smaller here. */
+@media only screen and (max-width: 580px) {
+  .main { padding-bottom: calc(1.5rem + var(--pf-safe-bottom)); }
+}
+
 /* -----------------------------------------------------------------
     - Cards, buttons and forms
 ----------------------------------------------------------------- */
