@@ -1,7 +1,7 @@
 {
   ".claude/settings.json": {
-    "mtime": 1795542527.2145774,
-    "seen": 1795542598.8771558,
+    "mtime": 1795717332.8167667,
+    "seen": 1795766151.8640823,
     "ast_hash": "0a0ef578e59e2bb38c69f1dcb49a0e1a",
     "semantic_hash": ""
   },
@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "admin/assets/admin.js": {
-    "mtime": 1795518039.1961865,
-    "seen": 1795542598.8771603,
-    "ast_hash": "b6f882dde6396d48b813e353d1095c4b",
+    "mtime": 1795717332.8204625,
+    "seen": 1795766151.8645556,
+    "ast_hash": "0293b0a17bda9bc9dd846ac844bc8a3d",
     "semantic_hash": ""
   },
   "admin/edit.php": {
@@ -42,9 +42,9 @@
     "semantic_hash": ""
   },
   "admin/login.php": {
-    "mtime": 1795518039.1964912,
-    "seen": 1795542598.8771634,
-    "ast_hash": "0e32288e5c0271dbd260b9d280a799c4",
+    "mtime": 1795717332.8206394,
+    "seen": 1795766151.864781,
+    "ast_hash": "da1f2b40d48d4769b3cbc8e1ce53e2e5",
     "semantic_hash": ""
   },
   "admin/logout.php": {
@@ -90,15 +90,15 @@
     "semantic_hash": ""
   },
   "app/admin/layout_bottom.php": {
-    "mtime": 1795518039.1972291,
-    "seen": 1795542598.87717,
-    "ast_hash": "793ae28c7007c9195d163d8762061be0",
+    "mtime": 1795717332.8215141,
+    "seen": 1795766151.8653283,
+    "ast_hash": "9a58a19a39d8ccbf7ec0fcb23c2ab5b2",
     "semantic_hash": ""
   },
   "app/admin/layout_top.php": {
-    "mtime": 1795518039.1973286,
-    "seen": 1795542598.877171,
-    "ast_hash": "1b41b56c5b38b9dbb33d5e228d293333",
+    "mtime": 1795717332.821958,
+    "seen": 1795766151.8653293,
+    "ast_hash": "88dba0c6ad07067563208712108a2aa4",
     "semantic_hash": ""
   },
   "app/admin/resources.php": {
@@ -108,14 +108,14 @@
     "semantic_hash": ""
   },
   "app/bootstrap.php": {
-    "mtime": 1795518039.1975234,
-    "seen": 1795542598.8771727,
-    "ast_hash": "bbc5c7e6cf97d4be10ded17f7bc73fa6",
+    "mtime": 1795717332.8225079,
+    "seen": 1795766151.8654041,
+    "ast_hash": "91e86c9d1ad5b406b4d5a46855372354",
     "semantic_hash": ""
   },
   "app/helpers.php": {
-    "mtime": 1795518039.1976218,
-    "seen": 1795542598.8771734,
+    "mtime": 1795717332.8226607,
+    "seen": 1795766151.865405,
     "ast_hash": "e8994035ff842e5eb30e884ef076151c",
     "semantic_hash": ""
   },
@@ -198,8 +198,8 @@
     "semantic_hash": ""
   },
   "app/migrations/2026_10_25_003_article_links.php": {
-    "mtime": 1795518039.1988475,
-    "seen": 1795542598.8771863,
+    "mtime": 1795717332.8227913,
+    "seen": 1795766151.8663795,
     "ast_hash": "75a121ee202267f03300971c00cbb1bf",
     "semantic_hash": ""
   },
@@ -210,14 +210,14 @@
     "semantic_hash": ""
   },
   "app/migrations/2026_10_25_005_oloom_text.php": {
-    "mtime": 1795518039.199047,
-    "seen": 1795542598.8771877,
+    "mtime": 1795717332.8228517,
+    "seen": 1795766151.8664553,
     "ast_hash": "287627b9654fa21c3fd1146f2de01b3c",
     "semantic_hash": ""
   },
   "app/migrations/2026_11_24_001_wp_laravel_articles.php": {
-    "mtime": 1795520245.150351,
-    "seen": 1795542598.877189,
+    "mtime": 1795717332.8231597,
+    "seen": 1795766151.866456,
     "ast_hash": "124a3291963d41c8c7a4f8412a05584a",
     "semantic_hash": ""
   },
@@ -240,14 +240,14 @@
     "semantic_hash": ""
   },
   "app/views/layout_top.php": {
-    "mtime": 1795518039.2008834,
-    "seen": 1795542598.877192,
-    "ast_hash": "28f583bfe1e12324f676c8f1b5d72472",
+    "mtime": 1795717332.8291664,
+    "seen": 1795766151.8666756,
+    "ast_hash": "6a28fb3164b0e65be304ce018736e8f2",
     "semantic_hash": ""
   },
   "app/views/link_cards.php": {
-    "mtime": 1795518039.2009397,
-    "seen": 1795542598.8771927,
+    "mtime": 1795717332.829312,
+    "seen": 1795766151.8666768,
     "ast_hash": "912132b888653c0b196bd26f40060617",
     "semantic_hash": ""
   },
@@ -258,9 +258,9 @@
     "semantic_hash": ""
   },
   "assets/js/common.js": {
-    "mtime": 1795518039.2975457,
-    "seen": 1795542598.8771946,
-    "ast_hash": "eb8d9b41dcbeda06d16e312cddced4ff",
+    "mtime": 1795717332.8410022,
+    "seen": 1795766151.8667533,
+    "ast_hash": "0ec0f957173cfb2612f60fb8d39b2bde",
     "semantic_hash": ""
   },
   "assets/js/enhance.js": {
@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "blog.php": {
-    "mtime": 1795518039.3028896,
-    "seen": 1795542598.8771994,
-    "ast_hash": "8a66ec8e3652842d2b01d28a6f9db891",
+    "mtime": 1795717332.8420358,
+    "seen": 1795766151.8671303,
+    "ast_hash": "8fdd5caf7c24f55359ea99eb098da02d",
     "semantic_hash": ""
   },
   "config/config.sample.php": {
@@ -348,21 +348,21 @@
     "semantic_hash": ""
   },
   "portfolio.php": {
-    "mtime": 1795518039.3037777,
-    "seen": 1795542598.8772063,
-    "ast_hash": "a56a1294bc08cf4abddf36e68910a2cc",
+    "mtime": 1795717332.8613284,
+    "seen": 1795766151.8677182,
+    "ast_hash": "66e382cc488af36829727c8614d7a3ac",
     "semantic_hash": ""
   },
   "post.php": {
-    "mtime": 1795518039.3038619,
-    "seen": 1795542598.877207,
-    "ast_hash": "bc428d25a5e6a2e6c5a141dc602c5519",
+    "mtime": 1795717332.8617842,
+    "seen": 1795766151.8677192,
+    "ast_hash": "1889fb2b2816553b13d7aad5010cca86",
     "semantic_hash": ""
   },
   "project.php": {
-    "mtime": 1795518039.3039412,
-    "seen": 1795542598.8772078,
-    "ast_hash": "ca993ca86491f1aee2a754123c430ba5",
+    "mtime": 1795717332.862767,
+    "seen": 1795766151.86772,
+    "ast_hash": "a9e34d5782396482a55c763356690997",
     "semantic_hash": ""
   },
   "resume.php": {
@@ -384,14 +384,14 @@
     "semantic_hash": ""
   },
   ".claude/CLAUDE.md": {
-    "mtime": 1795542527.2134473,
-    "seen": 1795542598.8772109,
+    "mtime": 1795717332.8165545,
+    "seen": 1795766151.867963,
     "ast_hash": "9b31786b637be3c13978bec4c2330752",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1795542527.2139974,
-    "seen": 1795542598.8772116,
+    "mtime": 1795717332.819671,
+    "seen": 1795766151.8679643,
     "ast_hash": "dfe5fa7939121e96d61b54077cc9ab84",
     "semantic_hash": ""
   },
@@ -456,14 +456,14 @@
     "semantic_hash": ""
   },
   "app/migrations/content/laravel-website-design.body.html": {
-    "mtime": 1795520026.1010482,
-    "seen": 1795542598.8772204,
+    "mtime": 1795717332.8261735,
+    "seen": 1795766151.8687532,
     "ast_hash": "d990ad1b2bca54f396e73e8f62cd4a5c",
     "semantic_hash": ""
   },
   "app/migrations/content/laravel-website-design.intro.html": {
-    "mtime": 1795519919.5168755,
-    "seen": 1795542598.877221,
+    "mtime": 1795717332.8263762,
+    "seen": 1795766151.8687541,
     "ast_hash": "fb08b41ceaa08ecb08e19adaba1c6b5e",
     "semantic_hash": ""
   },
@@ -486,8 +486,8 @@
     "semantic_hash": ""
   },
   "app/migrations/content/oloom.body.html": {
-    "mtime": 1795518039.1999674,
-    "seen": 1795542598.8772242,
+    "mtime": 1795717332.8265932,
+    "seen": 1795766151.8689792,
     "ast_hash": "58951f9fe57dd8c058b9f905206bb594",
     "semantic_hash": ""
   },
@@ -522,26 +522,26 @@
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-vs-laravel.body.html": {
-    "mtime": 1795520236.250691,
-    "seen": 1795542598.8772295,
+    "mtime": 1795717332.8268847,
+    "seen": 1795766151.8693542,
     "ast_hash": "baea20c39b0cb0301690c735a39d0f0e",
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-vs-laravel.intro.html": {
-    "mtime": 1795519946.2821932,
-    "seen": 1795542598.8772304,
+    "mtime": 1795717332.8272612,
+    "seen": 1795766151.8693552,
     "ast_hash": "4855a4ea0d57ca681933277b2e6be957",
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-website-design.body.html": {
-    "mtime": 1795520026.0989978,
-    "seen": 1795542598.8772311,
+    "mtime": 1795717332.8281252,
+    "seen": 1795766151.8693564,
     "ast_hash": "5e71a62cda88918ced1d5fd193b28a2e",
     "semantic_hash": ""
   },
   "app/migrations/content/wordpress-website-design.intro.html": {
-    "mtime": 1795519879.2830577,
-    "seen": 1795542598.877232,
+    "mtime": 1795717332.8283,
+    "seen": 1795766151.869357,
     "ast_hash": "1db7410b56ce10c6f27b7178c050609a",
     "semantic_hash": ""
   },
@@ -972,32 +972,32 @@
     "semantic_hash": ""
   },
   "assets/images/news/laravel-admin-dashboard.jpg": {
-    "mtime": 1795519870.708053,
-    "seen": 1795542598.87729,
+    "mtime": 1795717332.834542,
+    "seen": 1795766151.874866,
     "ast_hash": "0879eb56ccb76959aa000883aef95cd4",
     "semantic_hash": ""
   },
   "assets/images/news/laravel-api-security.jpg": {
-    "mtime": 1795519870.7097108,
-    "seen": 1795542598.8772907,
+    "mtime": 1795717332.8349776,
+    "seen": 1795766151.874867,
     "ast_hash": "3bf6ce235c5ac9a66c196d72672ad029",
     "semantic_hash": ""
   },
   "assets/images/news/laravel-architecture-layers.jpg": {
-    "mtime": 1795519870.7113414,
-    "seen": 1795542598.8772917,
+    "mtime": 1795717332.8352637,
+    "seen": 1795766151.8748677,
     "ast_hash": "0e8f62f10c90f4d3e31b87b7b7fbe004",
     "semantic_hash": ""
   },
   "assets/images/news/laravel-website-design-cover.jpg": {
-    "mtime": 1795519870.712567,
-    "seen": 1795542598.8772926,
+    "mtime": 1795717332.835791,
+    "seen": 1795766151.8748684,
     "ast_hash": "8c627ee26b795e393bb77039cf117b5d",
     "semantic_hash": ""
   },
   "assets/images/news/laravel-website-design-header.jpg": {
-    "mtime": 1795519870.7140563,
-    "seen": 1795542598.8772933,
+    "mtime": 1795717332.8363667,
+    "seen": 1795766151.8748696,
     "ast_hash": "f9e75858c089b27eecc62d648c432d72",
     "semantic_hash": ""
   },
@@ -1074,62 +1074,62 @@
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-plugins.jpg": {
-    "mtime": 1795519870.7156475,
-    "seen": 1795542598.8773046,
+    "mtime": 1795717332.8367472,
+    "seen": 1795766151.8760357,
     "ast_hash": "fe30f6c25b043dbc8a77479a3fe6a6cb",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-speed-security-seo.jpg": {
-    "mtime": 1795519870.7165453,
-    "seen": 1795542598.8773053,
+    "mtime": 1795717332.8371906,
+    "seen": 1795766151.8760366,
     "ast_hash": "6d897c2419af5de6d6baebd3e3fd6dce",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-theme-layout.jpg": {
-    "mtime": 1795519870.7173154,
-    "seen": 1795542598.8773062,
+    "mtime": 1795717332.8375,
+    "seen": 1795766151.8760376,
     "ast_hash": "3e24b91aafad3b9795d3c470272e2348",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-vs-laravel-balance.jpg": {
-    "mtime": 1795519870.7187777,
-    "seen": 1795542598.8773072,
+    "mtime": 1795717332.8378222,
+    "seen": 1795766151.8760386,
     "ast_hash": "750896b2f3a10d3ee6d24b573089ca4c",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-vs-laravel-cover.jpg": {
-    "mtime": 1795519870.719742,
-    "seen": 1795542598.877308,
+    "mtime": 1795717332.8381047,
+    "seen": 1795766151.8760395,
     "ast_hash": "d92d602a0ba12162ae135dc02b89a3d1",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-vs-laravel-decision.jpg": {
-    "mtime": 1795519870.7210245,
-    "seen": 1795542598.8773086,
+    "mtime": 1795717332.838411,
+    "seen": 1795766151.8760405,
     "ast_hash": "8cd72e2d915306079505ef5e48823f21",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-vs-laravel-growth.jpg": {
-    "mtime": 1795519870.7218757,
-    "seen": 1795542598.8773093,
+    "mtime": 1795717332.8386617,
+    "seen": 1795766151.8760412,
     "ast_hash": "d6cdf655fbe90633782d51d015a9cb24",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-vs-laravel-header.jpg": {
-    "mtime": 1795519870.7229676,
-    "seen": 1795542598.8773103,
+    "mtime": 1795717332.8391912,
+    "seen": 1795766151.8760421,
     "ast_hash": "56ec60f0050b570c062b9c330a65bb00",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-website-design-cover.jpg": {
-    "mtime": 1795519870.7239316,
-    "seen": 1795542598.877311,
+    "mtime": 1795717332.8398526,
+    "seen": 1795766151.876043,
     "ast_hash": "9227cfb3bf07eefbb7216ee7855aa868",
     "semantic_hash": ""
   },
   "assets/images/news/wordpress-website-design-header.jpg": {
-    "mtime": 1795519870.724997,
-    "seen": 1795542598.877312,
+    "mtime": 1795717332.8403764,
+    "seen": 1795766151.876044,
     "ast_hash": "89bf04efde47e27c19118a9e0689deaa",
     "semantic_hash": ""
   },
@@ -1599,6 +1599,144 @@
     "mtime": 1795518039.302801,
     "seen": 1795542598.8773744,
     "ast_hash": "dd13f1181d608f63d30d00e92de8e929",
+    "semantic_hash": ""
+  },
+  "admin/stats.php": {
+    "mtime": 1795717332.8208666,
+    "seen": 1795766151.8650992,
+    "ast_hash": "7cac4b007e96e7e30a1fa5b8dfbd19ae",
+    "semantic_hash": ""
+  },
+  "admin/theme.php": {
+    "mtime": 1795717332.8211477,
+    "seen": 1795766151.8651004,
+    "ast_hash": "6ff2d0e3726c77d6b99596dea5c8433c",
+    "semantic_hash": ""
+  },
+  "app/analytics.php": {
+    "mtime": 1795717332.8222072,
+    "seen": 1795766151.8654032,
+    "ast_hash": "7a675539cf005d664d7e65785d8001b9",
+    "semantic_hash": ""
+  },
+  "app/migrations/2026_11_26_001_analytics.php": {
+    "mtime": 1795717332.8235826,
+    "seen": 1795766151.8664575,
+    "ast_hash": "222597c66f295d1476cb27980b87399b",
+    "semantic_hash": ""
+  },
+  "app/migrations/2026_11_27_001_claude_api_article.php": {
+    "mtime": 1795717332.8238928,
+    "seen": 1795766151.8664584,
+    "ast_hash": "7a4655769e280f91dd6fdd0a2631ca07",
+    "semantic_hash": ""
+  },
+  "app/migrations/2026_11_27_002_wordpress_learning_roadmap_article.php": {
+    "mtime": 1795766120.4351075,
+    "seen": 1795766151.8664594,
+    "ast_hash": "512ca13815af49c771c7d1edfdffa381",
+    "semantic_hash": ""
+  },
+  "app/theme.php": {
+    "mtime": 1795717332.828726,
+    "seen": 1795766151.8665292,
+    "ast_hash": "6eb24a6445995ae71a0d5ee4c748f416",
+    "semantic_hash": ""
+  },
+  "cpanel.yml": {
+    "mtime": 1795718100.4573147,
+    "seen": 1795766151.867365,
+    "ast_hash": "9c3ed299f154eea70c7b244882060491",
+    "semantic_hash": ""
+  },
+  "app/migrations/content/claude-api-vs-subscription.body.html": {
+    "mtime": 1795717332.8248754,
+    "seen": 1795766151.8680952,
+    "ast_hash": "2faa07317f41086b622dda853439d971",
+    "semantic_hash": ""
+  },
+  "app/migrations/content/claude-api-vs-subscription.intro.html": {
+    "mtime": 1795717332.8258526,
+    "seen": 1795766151.8680966,
+    "ast_hash": "a1d4cec8e795cf99cc81d92c740e62bd",
+    "semantic_hash": ""
+  },
+  "app/migrations/content/wordpress-learning-roadmap.body.html": {
+    "mtime": 1795766143.745099,
+    "seen": 1795766151.869352,
+    "ast_hash": "a5e38079d33864486d5fa7c830ac6a16",
+    "semantic_hash": ""
+  },
+  "app/migrations/content/wordpress-learning-roadmap.intro.html": {
+    "mtime": 1795766117.5321436,
+    "seen": 1795766151.8693533,
+    "ast_hash": "441c4b9c0c59a08052a5b77217cbb276",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-account-ban-risk.jpg": {
+    "mtime": 1795717332.8300984,
+    "seen": 1795766151.8745756,
+    "ast_hash": "06f91f8d87088a35983e0a099be5c18f",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-api-vs-subscription-cover.jpg": {
+    "mtime": 1795717332.8310575,
+    "seen": 1795766151.8745766,
+    "ast_hash": "43dfdf47272efda5b7016eb8c096274c",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-api-vs-subscription-decision.jpg": {
+    "mtime": 1795717332.8319092,
+    "seen": 1795766151.8745775,
+    "ast_hash": "2e79d44ecdcd011374cedf6a95904652",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-api-vs-subscription-header.jpg": {
+    "mtime": 1795717332.8327618,
+    "seen": 1795766151.8745787,
+    "ast_hash": "8fce93c3b2d9e4691149585af791eb97",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-api-vs-subscription-who-for.jpg": {
+    "mtime": 1795717332.8333354,
+    "seen": 1795766151.8745794,
+    "ast_hash": "35a16fabb7a9645d546dda2ffd88bc91",
+    "semantic_hash": ""
+  },
+  "assets/images/news/claude-verification-documents-risk.jpg": {
+    "mtime": 1795717332.8338993,
+    "seen": 1795766151.8745804,
+    "ast_hash": "feae771b671048d8ad782863536650c8",
+    "semantic_hash": ""
+  },
+  "assets/images/news/wordpress-learning-roadmap-cover.jpg": {
+    "mtime": 1795765853.0307765,
+    "seen": 1795766151.8760307,
+    "ast_hash": "1e63d4affb554acf063a46cf693bd9b0",
+    "semantic_hash": ""
+  },
+  "assets/images/news/wordpress-learning-roadmap-header.jpg": {
+    "mtime": 1795765853.033023,
+    "seen": 1795766151.8760316,
+    "ast_hash": "78de1cc851d9316180d435e481d466ae",
+    "semantic_hash": ""
+  },
+  "assets/images/news/wordpress-learning-roadmap-internship.jpg": {
+    "mtime": 1795765853.036435,
+    "seen": 1795766151.8760328,
+    "ast_hash": "e3b7eb5a8a6c9c7c99307af21f50dead",
+    "semantic_hash": ""
+  },
+  "assets/images/news/wordpress-learning-roadmap-path.jpg": {
+    "mtime": 1795765853.0348375,
+    "seen": 1795766151.8760338,
+    "ast_hash": "f5a74b8701825cf04a8b588fcef39e96",
+    "semantic_hash": ""
+  },
+  "assets/images/news/wordpress-learning-roadmap-tools.jpg": {
+    "mtime": 1795765853.0380776,
+    "seen": 1795766151.8760345,
+    "ast_hash": "d56b9f7ccb896b9627a0958dbb3a15bd",
     "semantic_hash": ""
   }
 }
