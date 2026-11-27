@@ -6,6 +6,7 @@
  * setting_groups(): single values stored in the `settings` table, edited by admin/settings.php.
  *
  * Field types: text, textarea, html, image, number, percent, bool, select, slug, categories, gallery, schedule.
+ * A field with 'hidden' => true is saved but not shown (is_published is set by the publish control).
  */
 
 declare(strict_types=1);
@@ -48,8 +49,8 @@ function resources(): array
                 'images'         => ['label' => 'گالری تصاویر (اسلایدر)', 'type' => 'gallery'],
                 'meta_title'     => ['label' => 'عنوان تب مرورگر (SEO)', 'type' => 'text', 'col' => 6, 'help' => 'حداکثر حدود ۴۵ تا ۵۵ نویسه (نام سایت خودکار اضافه می‌شود)؛ خالی = عنوان نمونه‌کار.'],
                 'meta_desc'      => ['label' => 'توضیحات متا (SEO)', 'type' => 'text', 'col' => 6, 'help' => 'بین ۱۱۰ تا ۱۶۰ نویسه و یکتا برای هر نمونه‌کار؛ خالی = ابتدای متن.'],
-                'is_published'   => ['label' => 'نمایش در سایت', 'type' => 'bool', 'default' => 1],
-                'publish_at'     => ['label' => 'زمان انتشار (شمسی)', 'type' => 'schedule', 'help' => 'فقط برای پیش‌نویس‌ها. زمان به وقت تهران است؛ تا آن زمان پیش‌نویس می‌ماند و با اولین بازدید از سایت بعد از آن منتشر می‌شود. تاریخ نمایش هم با روز انتشار یکی می‌شود، مگر اینکه تاریخ دستی دیگری وارد کرده باشید.'],
+                'is_published'   => ['label' => 'نمایش در سایت', 'type' => 'bool', 'default' => 1, 'hidden' => true],
+                'publish_at'     => ['label' => 'وضعیت انتشار', 'type' => 'schedule', 'help' => 'زمان‌ها به وقت تهران است.'],
             ],
         ],
         'categories' => [
@@ -83,8 +84,8 @@ function resources(): array
                 'body_html'    => ['label' => 'متن پست', 'type' => 'html', 'rows' => 18],
                 'meta_title'   => ['label' => 'عنوان تب مرورگر (SEO)', 'type' => 'text', 'col' => 6, 'help' => 'حداکثر حدود ۵۵ نویسه؛ خالی = همان عنوان پست.'],
                 'meta_desc'    => ['label' => 'توضیحات متا (SEO)', 'type' => 'text', 'col' => 6, 'help' => 'بین ۱۱۰ تا ۱۶۰ نویسه و یکتا؛ خالی = خلاصهٔ پست.'],
-                'is_published' => ['label' => 'منتشر شود', 'type' => 'bool', 'default' => 1],
-                'publish_at'   => ['label' => 'زمان انتشار (شمسی)', 'type' => 'schedule', 'help' => 'فقط برای پیش‌نویس‌ها. زمان به وقت تهران است؛ تا آن زمان پیش‌نویس می‌ماند و با اولین بازدید از سایت بعد از آن منتشر می‌شود. تاریخ نمایش هم با روز انتشار یکی می‌شود، مگر اینکه تاریخ دستی دیگری وارد کرده باشید.'],
+                'is_published' => ['label' => 'منتشر شود', 'type' => 'bool', 'default' => 1, 'hidden' => true],
+                'publish_at'   => ['label' => 'وضعیت انتشار', 'type' => 'schedule', 'help' => 'زمان‌ها به وقت تهران است.'],
             ],
         ],
         'services' => [

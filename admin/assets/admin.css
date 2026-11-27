@@ -351,3 +351,188 @@
 .admin-meter span { background: var(--color-gradient); display: block; height: 100%; }
 .admin-table td.admin-num { color: var(--color-heading); font-weight: 500; text-align: left; white-space: nowrap; width: 1%; }
 .admin-muted { color: var(--color-paragraph); font-size: .78rem; opacity: .75; }
+
+/* ---------- publish: draft, publish now, or scheduled ---------- */
+.admin-publish {
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: relative;
+}
+/* The native radios stay in the form (for keyboard and screen readers); the labels draw the boxes. */
+.admin-publish__input {
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 1px;
+}
+.admin-choice {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-14);
+    color: var(--color-paragraph);
+    cursor: pointer;
+    display: block;
+    padding-block: 1rem 1.05rem;
+    padding-inline: 3rem 2.6rem;
+    position: relative;
+    transition: background-color .25s var(--pf-ease), border-color .25s var(--pf-ease), box-shadow .25s var(--pf-ease);
+}
+.admin-choice::before,
+.admin-choice::after {
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+}
+.admin-choice::before {
+    border: 2px solid var(--color-muted);
+    height: 1.15rem;
+    inset-inline-start: 1rem;
+    top: 1.05rem;
+    transition: border-color .25s var(--pf-ease);
+    width: 1.15rem;
+}
+.admin-choice::after {
+    background: var(--color-accent);
+    height: .55rem;
+    inset-inline-start: 1.3rem;
+    top: 1.35rem;
+    transform: scale(0);
+    transition: transform .3s var(--pf-ease);
+    width: .55rem;
+}
+.admin-choice__icon {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    inset-inline-end: 1rem;
+    position: absolute;
+    top: 1rem;
+    transition: color .25s var(--pf-ease);
+}
+.admin-choice__title {
+    color: var(--color-heading);
+    display: block;
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: .25rem;
+    text-wrap: balance;
+    transition: color .25s var(--pf-ease);
+}
+.admin-choice__desc { display: block; font-size: .8rem; line-height: 1.8; opacity: .8; }
+.admin-choice:hover { border-color: rgba(var(--color-accent-rgb), .4); }
+.admin-publish__input:checked + .admin-choice {
+    background: rgba(var(--color-accent-rgb), .06);
+    border-color: rgba(var(--color-accent-rgb), .75);
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), .12);
+}
+.admin-publish__input:checked + .admin-choice::before { border-color: var(--color-accent); }
+.admin-publish__input:checked + .admin-choice::after { transform: scale(1); }
+.admin-publish__input:checked + .admin-choice .admin-choice__icon { color: var(--color-accent); }
+.admin-publish__input:checked + .admin-choice .admin-choice__title { color: var(--color-accent); }
+.admin-publish__input:focus-visible + .admin-choice { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+/* The wheels panel only shows for "scheduled". The radio is a sibling of the panel, so no script is needed for this. */
+.admin-wheels {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-14);
+    display: none;
+    grid-column: 1 / -1;
+    padding: 1.1rem 1.1rem 1.2rem;
+}
+.admin-publish__input[value="scheduled"]:checked ~ .admin-wheels {
+    animation: admin-wheels-in .35s var(--pf-ease);
+    display: block;
+}
+@keyframes admin-wheels-in {
+    from { opacity: 0; transform: translateY(-.4rem); }
+    to { opacity: 1; transform: none; }
+}
+.admin-wheels__head {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.admin-wheels__title { color: var(--color-heading); font-size: .9rem; font-weight: 600; }
+.admin-wheels__preview {
+    background: rgba(var(--color-accent-rgb), .12);
+    border-radius: 999px;
+    color: var(--color-accent);
+    font-size: .85rem;
+    font-weight: 600;
+    padding: .35rem .9rem;
+}
+.admin-wheels__grid {
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: .9fr 1.8fr 1.2fr 1fr 1fr;
+}
+.admin-wheel { min-width: 0; }
+.admin-wheel__label {
+    color: var(--color-muted);
+    display: block;
+    font-size: .75rem;
+    margin-bottom: .4rem;
+    text-align: center;
+}
+/* Five visible rows: 72px above the centre band, the 36px band, 72px below. */
+.admin-wheel__window { height: 180px; position: relative; }
+.admin-wheel__band {
+    background: rgba(var(--color-line-rgb), .07);
+    border-radius: .65rem;
+    height: 36px;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 72px;
+}
+.admin-wheel__list {
+    -ms-overflow-style: none;
+    height: 180px;
+    inset: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 66%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 66%, transparent);
+    outline: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    position: absolute;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+}
+.admin-wheel__list::-webkit-scrollbar { display: none; }
+.admin-wheel__list::before,
+.admin-wheel__list::after { content: ""; display: block; height: 72px; }
+.admin-wheel__list:focus-visible { border-radius: .65rem; box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), .55); }
+.admin-wheel__item {
+    color: var(--color-paragraph);
+    cursor: pointer;
+    font-size: .95rem;
+    font-variant-numeric: tabular-nums;
+    height: 36px;
+    line-height: 36px;
+    scroll-snap-align: center;
+    text-align: center;
+    transition: color .2s;
+    user-select: none;
+    white-space: nowrap;
+}
+.admin-wheel__item[hidden] { display: none; }
+.admin-wheel__item:hover { color: var(--color-heading); }
+.admin-wheel__item.is-selected { color: var(--color-heading); font-weight: 700; }
+
+@media (max-width: 720px) {
+    .admin-publish { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+    .admin-wheels__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .admin-publish__input[value="scheduled"]:checked ~ .admin-wheels { animation: none; }
+    .admin-choice, .admin-choice::before, .admin-choice::after, .admin-wheel__item { transition: none; }
+}

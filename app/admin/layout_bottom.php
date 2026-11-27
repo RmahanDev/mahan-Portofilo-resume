@@ -11,6 +11,7 @@
     <script src="../assets/js/plugins.min.js"></script>
     <script src="../assets/js/common.js"></script>
     <script src="assets/admin.js?v=<?= ASSET_VERSION ?>"></script>
+    <script src="assets/publish.js?v=<?= ASSET_VERSION ?>"></script>
 </body>
 
 </html>

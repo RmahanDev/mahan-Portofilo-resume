@@ -24,11 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data[$name] = read_field($name, $def);
         }
 
-        // A scheduled item stays a draft until its time, whatever the publish switch says.
-        if (($data['publish_at'] ?? null) !== null) {
-            schedule_check_allowed($item);
-            $data['is_published'] = 0;
-            if (array_key_exists('date_text', $data)) {
+        // The publish choice (draft, now or scheduled) sets both is_published and publish_at.
+        if (isset($fields['publish_at'])) {
+            [$data['is_published'], $data['publish_at']] = schedule_read_choice('publish_at', $item);
+            if ($data['publish_at'] !== null && array_key_exists('date_text', $data)) {
                 $data['date_text'] = schedule_date_text($data['date_text'], $item ?? [], $data['publish_at']);
             }
         }
@@ -108,6 +107,8 @@ foreach ($fields as $name => $def) {
         $values[$name] = isset($_POST['categories'])
             ? array_map('intval', (array) $_POST['categories'])
             : ($id ? array_map('intval', array_column(rows('SELECT category_id FROM project_categories WHERE project_id = ?', [$id]), 'category_id')) : []);
+    } elseif ($def['type'] === 'schedule') {
+        $values[$name] = ['published' => $item ? (bool) ($item['is_published'] ?? 0) : true, 'at' => $item[$name] ?? null];
     } elseif ($def['type'] !== 'gallery') {
         $values[$name] = $item[$name] ?? field_default($def);
         if ($name === ($res['filter'] ?? null) && !$item && isset($_GET['f'])) {
@@ -135,6 +136,7 @@ require dirname(__DIR__) . '/app/admin/layout_top.php';
                             <?= csrf_field() ?>
                             <div class="row">
 <?php foreach ($fields as $name => $def): ?>
+<?php if (!empty($def['hidden'])): continue; endif; ?>
 <?php if ($def['type'] === 'gallery'): ?>
                                 <div class="col-12">
                                     <div class="form-group">

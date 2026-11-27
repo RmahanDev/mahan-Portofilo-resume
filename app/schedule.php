@@ -1,16 +1,18 @@
 <?php
 /**
- * Scheduled publishing for posts and projects.
+ * Publishing for posts and projects: a draft, published now, or scheduled for a Tehran time.
  *
- * An item with a publish time (publish_at) is a draft until that time. publish_due_items() runs on every request,
- * so the first visit after the time publishes it; shared hosting needs no cron job for this.
- * All times are Tehran wall-clock time, the zone set in bootstrap.php.
+ * A scheduled item is kept as a draft (is_published = 0) with its time in publish_at. publish_due_items() runs on
+ * every request, so the first visit after the time publishes it; shared hosting needs no cron job for this.
  */
 
 declare(strict_types=1);
 
 /** Tables that have a publish_at column (added by migration 2026_11_27_004_scheduled_publish). */
 const SCHEDULED_TABLES = ['posts', 'projects'];
+
+/** The choices of the publish control in the admin form. */
+const PUBLISH_MODES = ['draft', 'now', 'scheduled'];
 
 /** Publishes every scheduled item whose time has come. Never throws: a public page must not fail because of this. */
 function publish_due_items(): void
@@ -50,6 +52,26 @@ function schedule_label(string $mysql): string
     return schedule_day_text($timestamp) . ' ساعت ' . fa_digits(date('H:i', $timestamp));
 }
 
+/** The same time written from its parts, for the preview in the form. */
+function schedule_state_text(int $year, int $month, int $day, int $hour, int $minute): string
+{
+    return fa_digits(sprintf('%d %s %d', $day, jalali_month_names()[$month - 1], $year))
+        . ' ساعت ' . fa_digits(sprintf('%02d:%02d', $hour, $minute));
+}
+
+/** Number of days in a Jalali month. Esfand has 30 days in a leap year and 29 otherwise. */
+function schedule_days_in_month(int $jy, int $jm): int
+{
+    if ($jm <= 6) {
+        return 31;
+    }
+    if ($jm <= 11) {
+        return 30;
+    }
+    [$gy, $gm, $gd] = jalali_to_gregorian($jy, 12, 30);
+    return gregorian_to_jalali($gy, $gm, $gd) === [$jy, 12, 30] ? 30 : 29;
+}
+
 /** A number posted by the form, or -1 when it is missing or not a plain number. */
 function schedule_posted_number(string $key): int
 {
@@ -58,16 +80,12 @@ function schedule_posted_number(string $key): int
 }
 
 /**
- * The publish time posted by the form, as a MySQL datetime in Tehran time.
+ * The publish time posted by the wheel pickers, as a MySQL datetime in Tehran time.
  *
- * @return string|null null when the schedule switch is off
  * @throws RuntimeException with a message for the admin when the date is not a real moment in the future
  */
-function schedule_read_post(string $name): ?string
+function schedule_read_time(string $name): string
 {
-    if (empty($_POST[$name . '_on'])) {
-        return null;
-    }
     $jy = schedule_posted_number($name . '_year');
     $jm = schedule_posted_number($name . '_month');
     $jd = schedule_posted_number($name . '_day');
@@ -76,23 +94,21 @@ function schedule_read_post(string $name): ?string
     if ($jy < 1380 || $jy > 1500 || $jm < 1 || $jm > 12 || $jd < 1 || $jd > 31 || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59) {
         throw new RuntimeException('زمان انتشار معتبر نیست.');
     }
-
-    [$gy, $gm, $gd] = jalali_to_gregorian($jy, $jm, $jd);
-    // A day that the month does not have (31 Mehr, 30 Esfand of a common year) rolls over into the next month.
-    if (gregorian_to_jalali($gy, $gm, $gd) !== [$jy, $jm, $jd]) {
+    if ($jd > schedule_days_in_month($jy, $jm)) {
         throw new RuntimeException('زمان انتشار معتبر نیست؛ این روز در آن ماه وجود ندارد.');
     }
 
+    [$gy, $gm, $gd] = jalali_to_gregorian($jy, $jm, $jd);
     $mysql = sprintf('%04d-%02d-%02d %02d:%02d:00', $gy, $gm, $gd, $hour, $minute);
     if ($mysql <= date('Y-m-d H:i:s')) {
-        throw new RuntimeException('زمان انتشار گذشته است. اگر این مورد همین حالا منتشر شده، صفحه را دوباره باز کنید. برای انتشار فوری، زمان‌بندی را خاموش کنید و «منتشر شود» را فعال کنید.');
+        throw new RuntimeException('زمان انتشار گذشته است. اگر این مورد در این فاصله منتشر شده، صفحه را دوباره باز کنید.');
     }
     return $mysql;
 }
 
 /**
  * A schedule is for items that are not live yet. Giving a live item a future time would take it off the site
- * (and out of the sitemap and feed) until then, so it is refused; the admin saves it as a draft first.
+ * (and out of the sitemap and feed) until then, so it is refused; the admin chooses draft first.
  *
  * @param array|null $item the stored row, null for a new item
  * @throws RuntimeException
@@ -100,33 +116,58 @@ function schedule_read_post(string $name): ?string
 function schedule_check_allowed(?array $item): void
 {
     if ($item !== null && !empty($item['is_published']) && empty($item['publish_at'])) {
-        throw new RuntimeException('این مورد هم‌اکنون منتشر است. زمان‌بندی فقط برای پیش‌نویس‌ها است؛ اگر می‌خواهید دوباره زمان‌بندی کنید، ابتدا «منتشر شود» را خاموش و ذخیره کنید. صفحه را هم دوباره باز کنید تا وضعیت فعلی را ببینید.');
+        throw new RuntimeException('این مورد هم‌اکنون منتشر است. برای زمان‌بندی، ابتدا گزینهٔ «پیش‌نویس» را انتخاب و ذخیره کنید.');
     }
 }
 
 /**
- * The schedule shown in the form: the posted values after a rejected submit, otherwise the stored time,
- * or tomorrow at 09:00 for an item that has none.
+ * The publish choice posted by the form: draft, now, or scheduled.
  *
- * @return array{on: bool, year: int, month: int, day: int, hour: int, minute: int}
+ * @param array|null $item the stored row, null for a new item
+ * @return array{0: int, 1: ?string} [is_published, publish_at]
+ * @throws RuntimeException
  */
-function schedule_form_state(string $name, ?string $stored): array
+function schedule_read_choice(string $name, ?array $item): array
+{
+    $mode = $_POST[$name . '_mode'] ?? '';
+    if (!is_string($mode) || !in_array($mode, PUBLISH_MODES, true)) {
+        throw new RuntimeException('وضعیت انتشار معتبر نیست.');
+    }
+    if ($mode === 'draft') {
+        return [0, null];
+    }
+    if ($mode === 'now') {
+        return [1, null];
+    }
+    schedule_check_allowed($item);
+    return [0, schedule_read_time($name)];
+}
+
+/**
+ * What the publish control shows: the chosen mode and the wheel values.
+ * After a rejected submit it shows what was posted; otherwise the stored item. A new item starts as "now".
+ *
+ * @return array{mode: string, year: int, month: int, day: int, hour: int, minute: int}
+ */
+function schedule_form_state(string $name, bool $published, ?string $stored): array
 {
     $keys = ['year', 'month', 'day', 'hour', 'minute'];
     $default = schedule_parts((int) strtotime('tomorrow 09:00'));
 
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-        $state = ['on' => !empty($_POST[$name . '_on'])];
+        $posted = $_POST[$name . '_mode'] ?? '';
+        $state = ['mode' => is_string($posted) && in_array($posted, PUBLISH_MODES, true) ? $posted : 'now'];
+        $limits = [[1380, 1500], [1, 12], [1, 31], [0, 23], [0, 59]];
         foreach ($keys as $i => $key) {
-            $posted = schedule_posted_number($name . '_' . $key);
-            $state[$key] = $posted >= 0 ? $posted : $default[$i];
+            $value = schedule_posted_number($name . '_' . $key);
+            $state[$key] = $value >= $limits[$i][0] && $value <= $limits[$i][1] ? $value : $default[$i];
         }
         return $state;
     }
-    if ($stored === null) {
-        return ['on' => false] + array_combine($keys, $default);
-    }
-    return ['on' => true] + array_combine($keys, schedule_parts((int) strtotime($stored)));
+
+    $mode = $stored !== null ? 'scheduled' : ($published ? 'now' : 'draft');
+    $parts = $stored !== null ? schedule_parts((int) strtotime($stored)) : $default;
+    return ['mode' => $mode] + array_combine($keys, $parts);
 }
 
 /**

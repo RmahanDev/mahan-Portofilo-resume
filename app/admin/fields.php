@@ -121,66 +121,90 @@ function render_field(string $name, array $def, $value): string
 }
 
 /**
- * Scheduled publish time: a switch, then Jalali day, month, year, hour and minute selects.
- * $stored is the Tehran datetime saved with the item, or empty when nothing is scheduled.
+ * Publish control: draft, publish now, or scheduled. Scheduled shows wheel pickers for the time (see admin/assets/publish.js).
+ * $value is ['published' => bool, 'at' => ?string]: the stored state of the item, from edit.php.
  */
-function render_schedule(string $name, array $def, $stored): string
+function render_schedule(string $name, array $def, array $value): string
 {
-    // After a rejected submit $stored is the posted array; the form then shows the posted values instead.
-    $storedText = is_string($stored) && $stored !== '' ? $stored : null;
-    $state = schedule_form_state($name, $storedText);
-    $id = 'f_' . $name;
-    $nowYear = schedule_parts(time())[0];
+    $stored = isset($value['at']) && $value['at'] !== '' ? (string) $value['at'] : null;
+    $state = schedule_form_state($name, (bool) ($value['published'] ?? true), $stored);
 
-    $years = array_unique(array_merge(range($nowYear, $nowYear + 3), [$state['year']]));
+    $nowYear = schedule_parts(time())[0];
+    $years = array_values(array_unique(array_merge(range($nowYear, $nowYear + 3), [$state['year']])));
     sort($years);
 
-    $dayOptions = [];
+    $maxDay = schedule_days_in_month($state['year'], $state['month']);
+    $day = min($state['day'], $maxDay);
+
+    // Each wheel item is [value, label, extra attributes]. Days past the end of the month are hidden, not removed,
+    // so the wheel keeps one position per day.
+    $days = [];
     for ($d = 1; $d <= 31; $d++) {
-        $dayOptions[$d] = fa_digits((string) $d);
+        $days[] = [$d, fa_digits((string) $d), $d > $maxDay ? ' hidden' : ''];
     }
-    $monthOptions = [];
-    foreach (jalali_month_names() as $i => $month) {
-        $monthOptions[$i + 1] = $month;
+    $months = [];
+    foreach (jalali_month_names() as $i => $monthName) {
+        $months[] = [$i + 1, $monthName, ''];
     }
-    $yearOptions = [];
+    $yearItems = [];
     foreach ($years as $y) {
-        $yearOptions[$y] = fa_digits((string) $y);
+        $yearItems[] = [$y, fa_digits((string) $y), ' data-esfand="' . schedule_days_in_month($y, 12) . '"'];
     }
-    $hourOptions = [];
+    $hours = [];
     for ($h = 0; $h < 24; $h++) {
-        $hourOptions[$h] = fa_digits(sprintf('%02d', $h));
+        $hours[] = [$h, fa_digits(sprintf('%02d', $h)), ''];
     }
-    $minuteOptions = [];
+    $minutes = [];
     for ($m = 0; $m < 60; $m++) {
-        $minuteOptions[$m] = fa_digits(sprintf('%02d', $m));
+        $minutes[] = [$m, fa_digits(sprintf('%02d', $m)), ''];
     }
 
-    $picker = static function (string $part, string $label, string $width, array $options, int $selected) use ($name): string {
-        $control = $name . '_' . $part;
-        $html = '<div class="' . $width . '"><label class="admin-label" for="f_' . $control . '">' . e($label) . '</label>'
-            . '<select class="custom-select" id="f_' . $control . '" name="' . $control . '">';
-        foreach ($options as $value => $text) {
-            $html .= '<option value="' . (int) $value . '"' . ((int) $value === $selected ? ' selected' : '') . '>' . e($text) . '</option>';
+    $wheel = static function (string $key, string $label, array $items, int $selected) use ($name): string {
+        $html = '<div class="admin-wheel" data-wheel="' . $key . '">'
+            . '<span class="admin-wheel__label">' . e($label) . '</span>'
+            . '<div class="admin-wheel__window"><div class="admin-wheel__band" aria-hidden="true"></div>'
+            . '<div class="admin-wheel__list" tabindex="0" role="listbox" aria-label="' . e($label) . '">';
+        foreach ($items as [$itemValue, $text, $extra]) {
+            $on = (int) $itemValue === $selected;
+            $html .= '<div class="admin-wheel__item' . ($on ? ' is-selected' : '') . '" role="option"'
+                . ' aria-selected="' . ($on ? 'true' : 'false') . '" data-value="' . (int) $itemValue . '"' . $extra . '>'
+                . e((string) $text) . '</div>';
         }
-        return $html . '</select></div>';
+        return $html . '</div></div><input type="hidden" name="' . $name . '_' . $key . '" value="' . $selected . '"></div>';
     };
 
+    $wheels = $wheel('day', 'روز', $days, $day)
+        . $wheel('month', 'ماه', $months, $state['month'])
+        . $wheel('year', 'سال', $yearItems, $state['year'])
+        . $wheel('hour', 'ساعت', $hours, $state['hour'])
+        . $wheel('minute', 'دقیقه', $minutes, $state['minute']);
+
+    $choices = [
+        'draft' => ['پیش‌نویس', 'فقط در پنل مدیریت دیده می‌شود', 'feathericon-edit-3'],
+        'now' => ['منتشر شود', 'همین حالا در سایت نمایش داده می‌شود', 'feathericon-globe'],
+        'scheduled' => ['انتشار زمان‌بندی شده', 'در زمان انتخابی خودکار منتشر می‌شود', 'feathericon-clock'],
+    ];
+    $radios = '';
+    foreach ($choices as $mode => [$title, $desc, $icon]) {
+        $id = $name . '_mode_' . $mode;
+        $radios .= '<input type="radio" class="admin-publish__input" id="' . $id . '" name="' . $name . '_mode" value="' . $mode . '"'
+            . ($state['mode'] === $mode ? ' checked' : '') . '>'
+            . '<label class="admin-choice" for="' . $id . '"><i class="' . $icon . ' admin-choice__icon" aria-hidden="true"></i>'
+            . '<span class="admin-choice__title">' . e($title) . '</span>'
+            . '<span class="admin-choice__desc">' . e($desc) . '</span></label>';
+    }
+
+    $preview = schedule_state_text($state['year'], $state['month'], $day, $state['hour'], $state['minute']);
     $help = isset($def['help']) ? '<div class="admin-help">' . e($def['help']) . '</div>' : '';
 
     return '<div class="col-12"><div class="form-group">'
-        . '<label class="admin-label">' . e($def['label']) . '</label>'
-        . '<div class="form-check form-switch admin-switch">'
-        . '<input class="form-check-input" type="checkbox" role="switch" id="' . $id . '_on" name="' . $name . '_on" value="1"' . ($state['on'] ? ' checked' : '') . '>'
-        . '<label class="form-check-label" for="' . $id . '_on">منتشر شود در زمان مشخص (تا آن زمان پیش‌نویس می‌ماند)</label>'
-        . '</div>'
-        . '<div class="row">'
-        . $picker('day', 'روز', 'col-6 col-md-2', $dayOptions, $state['day'])
-        . $picker('month', 'ماه', 'col-6 col-md-4', $monthOptions, $state['month'])
-        . $picker('year', 'سال', 'col-6 col-md-2', $yearOptions, $state['year'])
-        . $picker('hour', 'ساعت', 'col-6 col-md-2', $hourOptions, $state['hour'])
-        . $picker('minute', 'دقیقه', 'col-6 col-md-2', $minuteOptions, $state['minute'])
-        . '</div>'
+        . '<div class="admin-label">' . e($def['label']) . '</div>'
+        . '<div class="admin-publish" data-publish role="radiogroup" aria-label="' . e($def['label']) . '">' . $radios
+        . '<div class="admin-wheels">'
+        . '<div class="admin-wheels__head"><span class="admin-wheels__title">زمان انتشار</span>'
+        . '<span class="admin-wheels__preview" data-preview>' . e($preview) . '</span></div>'
+        . '<div class="admin-wheels__grid">' . $wheels . '</div>'
+        . '</div></div>'
         . $help
         . '</div></div>';
 }
@@ -212,7 +236,7 @@ function read_field(string $name, array $def)
             }
             return $raw;
         case 'schedule':
-            return schedule_read_post($name);
+            return null; // written by schedule_read_choice() in edit.php
         case 'slug':
             $slug = strtolower(preg_replace('~[^A-Za-z0-9_\-]+~', '-', $raw));
             return trim($slug, '-');
